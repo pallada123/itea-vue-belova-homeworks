@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs Vanilla JS - Belova, h/w 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="tabs.css">
+</head>
+<body>
+
+<div id="app">
+
+    <div class="bg-btns">
+
+        <button type="button" data-bg="lilac" class="btn-active">Lilac</button>
+        <button type="button" data-bg="green">Green</button>
+        <button type="button" data-bg="yellow">Yellow</button>
+
+    </div>
+
+    <div id="bg-container" class="lilac">
+        <ul class="tab-list">
+            <li class="tab-active"><a href="#tab1">Austen</a></li>
+            <li><a href="#tab2">Dickens</a></li>
+            <li><a href="#tab3">Shakespeare</a></li>
+        </ul>
+        <div id="tab1" style="display: block;">
+            <ul>
+                <li>Sense and Sensibility</li>
+                <li>Pride and Prejudice</li>
+                <li>Mansfield Park</li>
+                <li>Emma</li>
+                <li>Northanger Abbey</li>
+                <li>Persuasion</li>
+            </ul>
+        </div>
+        <div id="tab2" style="display: none;">
+            <ul>
+                <li>The Pickwick Papers</li>
+                <li>Oliver Twist</li>
+                <li>Nicholas Nickleby</li>
+                <li>A Christmas Carol</li>
+                <li>Dombey and Son</li>
+                <li>David Copperfield</li>
+            </ul>
+        </div>
+        <div id="tab3" style="display: none;">
+            <ul>
+                <li>Antony and Cleopatra</li>
+                <li>Hamlet</li>
+                <li>King Lear</li>
+                <li>Macbeth</li>
+                <li>Othello</li>
+                <li>Romeo and Juliet</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="tabs.js"></script>
+
+</body>
+</html>

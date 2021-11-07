@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs Vue - Belova, h/w 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="tabs.css">
+</head>
+<body>
+
+<div id="app">
+
+    <div v-bind:class="btnsContainer">
+
+        <button type="button"
+                v-for="(item) in bgColors"
+                v-on:click="bgContainerClass = item.colorClass"
+                v-bind:class="item.colorClass === bgContainerClass ? btnActiveClass : ''">{{ item.btnName }}</button>
+
+    </div>
+
+    <div v-bind="idBgContainer" v-bind:class="bgContainerClass">
+        <ul v-bind:class="tabListClass">
+            <li v-for="(item, i) in writers"
+                v-on:click="writerIndex = i"
+                v-bind:class="writerIndex == i ? tabActiveClass : ''">{{ writers[i].surName }}</li>
+        </ul>
+        <div>
+            <ul>
+                <li v-for="(item) in writers[writerIndex].books">{{ item }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="tabs.js"></script>
+
+</body>
+</html>

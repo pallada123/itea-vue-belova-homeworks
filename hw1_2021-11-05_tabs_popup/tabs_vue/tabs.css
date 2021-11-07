@@ -1,0 +1,166 @@
+* {box-sizing: border-box; margin: 0; padding: 0;}
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: #000;
+    font-size: 19px;
+    font-style: normal;
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDMxNyAxNjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSItOS4xNTA2MzUwOTQ2MTA5NyUiIHkxPSI2NS44NDkzNjQ5MDUzODklIiB4Mj0iMTA5LjE1MDYzNTA5NDYxMSUiIHkyPSIzNC4xNTA2MzUwOTQ2MTElIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgxNzViNSIgc3RvcC1vcGFjaXR5PSIxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzc1YzNlMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMzE3IiBoZWlnaHQ9IjE2MCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+    background-image: -o-linear-gradient(15deg, #8175b5 0%, #75c3e1 100%);
+    background-image: linear-gradient(75deg, #8175b5 0%, #75c3e1 100%);
+}
+
+ul, ul li {
+    list-style: none outside none;
+}
+ul {margin: 0; padding: 0;}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 100px 20px;
+}
+
+.bg-btns {
+    text-align: left;
+    padding: 20px 20px 0 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+#bg-container {
+    margin-left: auto;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+button {
+    border: none;
+    outline: none;
+    border-radius: 999px;
+    color: #000;
+    min-width: 100px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.3);
+    box-shadow: 0 1px 1px rgba(0,0,0,.3);
+    display: inline-block;
+    cursor: pointer;
+    opacity: .6;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin-bottom: 20px;
+}
+button:hover,
+button.btn-active,
+button.btn-active:hover {
+    opacity: 1;
+}
+
+
+.lilac {
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDMxNyAxNjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSItOS4xNTA2MzUwOTQ2MTA5NyUiIHkxPSI2NS44NDkzNjQ5MDUzODklIiB4Mj0iMTA5LjE1MDYzNTA5NDYxMSUiIHkyPSIzNC4xNTA2MzUwOTQ2MTElIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgxNzViNSIgc3RvcC1vcGFjaXR5PSIxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2I5NzdiMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMzE3IiBoZWlnaHQ9IjE2MCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+    background-image: -o-linear-gradient(15deg, #8175b5 0%, #b977b1 100%);
+    background-image: linear-gradient(75deg, #8175b5 0%, #b977b1 100%);
+}
+.green {
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDMxNyAxNjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSItOS4xNTA2MzUwOTQ2MTA5NyUiIHkxPSI2NS44NDkzNjQ5MDUzODklIiB4Mj0iMTA5LjE1MDYzNTA5NDYxMSUiIHkyPSIzNC4xNTA2MzUwOTQ2MTElIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzllYmM3NCIgc3RvcC1vcGFjaXR5PSIxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzcyY2NiMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMzE3IiBoZWlnaHQ9IjE2MCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+    background-image: -o-linear-gradient(15deg, #9ebc74 0%, #72ccb1 100%);
+    background-image: linear-gradient(75deg, #9ebc74 0%, #72ccb1 100%);
+}
+.yellow {
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDMxNyAxNjAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxsaW5lYXJHcmFkaWVudCBpZD0iaGF0MCIgZ3JhZGllbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHgxPSItOS4xNTA2MzUwOTQ2MTA5NyUiIHkxPSI2NS44NDkzNjQ5MDUzODklIiB4Mj0iMTA5LjE1MDYzNTA5NDYxMSUiIHkyPSIzNC4xNTA2MzUwOTQ2MTElIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NlYTA1NiIgc3RvcC1vcGFjaXR5PSIxIi8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q2ZDI2MCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgIDwvbGluZWFyR3JhZGllbnQ+Cgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMzE3IiBoZWlnaHQ9IjE2MCIgZmlsbD0idXJsKCNoYXQwKSIgLz4KPC9zdmc+);
+    background-image: -o-linear-gradient(15deg, #cea056 0%, #d6d260 100%);
+    background-image: linear-gradient(75deg, #cea056 0%, #d6d260 100%);
+}
+
+ul.tab-list {
+    border-bottom: solid 1px #cdcdcd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+ul.tab-list li {
+    margin: 0 10px 10px 10px;
+    opacity: .5;
+    cursor: pointer;
+    border-bottom: solid 1px transparent;
+    color: #fff;
+}
+ul.tab-list li:hover,
+ul.tab-list li.tab-active,
+ul.tab-list li.tab-active:hover {
+    opacity: 1;
+}
+ul.tab-list li.tab-active,
+ul.tab-list li.tab-active:hover {
+    border-bottom-color: #fff;
+}
+
+
+@media only screen and (max-width: 500px) {
+
+    #app {display: block; padding: 40px 20px;}
+
+    .bg-btns {
+        text-align: center;
+        padding: 0;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    #bg-container {
+        margin: 0 -20px;
+        border-radius: 0;
+        width: auto;
+    }
+    .bg-btns button {
+        margin: 0 10px 20px 10px;
+    }
+
+}
+
+
+@media only screen and (max-width: 400px) {
+
+    .bg-btns,
+    ul.tab-list {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+}
