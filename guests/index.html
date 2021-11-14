@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guests List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 0 5px;
+        }
+        .checked-guest td {text-decoration: line-through;}
+        .btn-active::before {
+            content: '✓ ';
+            display: inline;
+        }
+        td span {font-weight: bold; color: red;}
+        #more-box {text-align: right;}
+    </style>
+</head>
+<body>
+
+    <div id="app" v-cloak>
+
+        <g-w />
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="guests.js"></script>
+    <script src="components/guests/more.js"></script>
+    <script src="components/guests/filter/filter-input.js"></script>
+    <script src="components/guests/filter/filter-button.js"></script>
+    <script src="components/guests/filter/filter-wrap.js"></script>
+    <script src="components/guests/guest-card.js"></script>
+    <script src="components/guests/guests-wrap.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
