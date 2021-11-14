@@ -1,15 +1,6 @@
 const More = {
     name: 'More',
     props: ['shownGuestsParts', 'shownGuests'],
-    data() {
-        return {
-
-        }
-    },
-    methods: {
-
-
-    },
     template: `
     <div v-if="shownGuestsParts.length < shownGuests.length" id="more-box">
         

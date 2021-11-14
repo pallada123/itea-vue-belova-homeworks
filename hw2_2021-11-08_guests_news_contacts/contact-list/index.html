@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        th {text-align: left; border-bottom: solid 1px #cdcdcd; padding: 0 5px 5px 5px;}
+        td {
+            padding: 5px;
+        }
+        #create-form {
+            margin: 20px 0;
+            padding: 10px 10px 0 10px;
+            background-color: #cdcdcd;
+        }
+        #create-form label,
+        #create-form input {
+            margin-bottom: 10px;
+        }
+        #create-form label {display: inline-block; width: 80px;}
+        #create-form button {margin-bottom: 10px;}
+        #search-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app" v-cloak>
+
+    <c-w />
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="components/search-form.js"></script>
+<script src="components/create-form.js"></script>
+<script src="components/contact-card.js"></script>
+<script src="components/contact-wrap.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

@@ -69,6 +69,11 @@ const GuestsWrap = {
   `,
   methods: {
 
+    /**
+     * меняет наполнение массива arrivedGuests (элемент массива - ID чекнутого гостя)
+     * @param event - объект гостя, в котором произошло событие изменения чекбокса "прибыл"
+     *
+     */
     setArrive(event) {
       if (event.isChecked) {
         this.arrivedGuests.push(event.id);
@@ -77,7 +82,17 @@ const GuestsWrap = {
       }
     },
 
-
+    /**
+     * фильтрует гостей, из "всех гостей" делая массив гостей, которых надо показывать
+     * 1. проверяет значение каждого ключа полученного объекта
+     * 2. в зависимости от комбинации ключей переписывает массив shownGuests
+     * (список гостей, который сейчас нужно показывать)
+     * 3. переписывает значение переменной searchValue
+     * 4. сбрасывает значение переменной  page
+     * (количество десятков гостей, которые сейчас выводятся)
+     * @param filters - изменённый объект filters с состояниями каждого из трёх фильтров
+     * (нажата или нет кнопка прибывших, нажата или нет кнопка неприбывших, value инпута поиска
+     */
     setFilteredGuests(filters) {
 
       let guests = this.guests;
@@ -99,16 +114,17 @@ const GuestsWrap = {
           guests = this.guests;
       }
 
+      this.searchValue = filters.searchText;
+
       if (guests.length > 0 && filters.searchText) {
 
-        this.searchValue = filters.searchText;
 
         guests = guests.filter( (item) => {
 
           let keys = Object.keys(item);
 
           for (let key of keys) {
-            if (String(item[key]).indexOf(filters.searchText) !== -1) {
+            if (String(item[key]).toLowerCase().indexOf(filters.searchText.toLowerCase()) !== -1) {
               return true;
             }
           }
@@ -120,10 +136,18 @@ const GuestsWrap = {
       this.page = 1;
     },
 
+    /**
+     * инкрементирует значение переменной page (количество десятков гостей, которые сейчас выводятся)
+     */
     addMore() {
       this.page++;
     },
 
+    /**
+     * устанавливает значение переменной  page (количество десятков гостей,
+     * которые сейчас выводятся) на число, безусловно превышающее
+     * возможное количество страниц результатов поиска - чтобы показать всех.
+     */
     showAll() {
       this.page = this.shownGuests.length;
     }
