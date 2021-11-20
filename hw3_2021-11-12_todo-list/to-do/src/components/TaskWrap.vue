@@ -12,7 +12,11 @@
       <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
     </div>
 
-    <div id="task-wrap" v-if="userData.length">
+    <div class="task-style-btn">
+      <action-button @btn-click="taskStyle = !taskStyle">{{ btnCaption }}</action-button>
+    </div>
+
+    <div id="task-wrap" v-if="userData.length" :class="taskStyle ? '' : 'task-wrap-grid'">
 
       <task
         v-for="task in userData"
@@ -53,7 +57,9 @@ export default {
   data() {
     return {
       blankTask: Object.assign({}, blankTask),
-      isAdding: false
+      isAdding: false,
+      taskStyle: true // true - list, false - grid
+
     }
   },
 
@@ -61,6 +67,17 @@ export default {
     ActionButton,
     EditForm,
     Task
+  },
+
+  computed: {
+
+    /**
+     * @returns {string} - текст кнопки переключения статуса (выполнено или нет) в зависимости от статуса
+     */
+    btnCaption() {
+      return 'Show ' + (this.taskStyle ? 'grid' : 'list');
+    }
+
   },
 
   methods: {
@@ -132,7 +149,30 @@ export default {
 
 <style scoped>
 .add-task-btn {
+  margin-bottom: 0;
+  text-align: right;
+}
+.task-style-btn {
   margin-bottom: 20px;
   text-align: right;
+}
+
+#task-wrap {
+  display: block;
+  position: relative;
+}
+#task-wrap.task-wrap-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 </style>

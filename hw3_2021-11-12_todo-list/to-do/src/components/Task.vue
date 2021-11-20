@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="task-container" :class="task.isDone ? 'task-item-done' : ''">
 
     <div class="task-item" v-if="isEditing" :class="task.isDone ? 'task-item-done' : ''">
       <edit-form
@@ -9,7 +9,7 @@
       />
     </div>
 
-    <div class="task-item" v-else :class="task.isDone ? 'task-item-done' : ''">
+    <div class="task-item" v-else>
 
       <div class="task-img">
         <img v-if="task.taskImgUrl" :src="task.taskImgUrl" />
@@ -114,6 +114,13 @@ export default {
 </script>
 
 <style scoped>
+.task-container {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+  width: auto;
+}
 .task-item {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -123,10 +130,6 @@ export default {
   align-items: flex-start;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  margin-bottom: 20px;
   padding: 20px;
 }
 
@@ -142,7 +145,7 @@ export default {
 .task-head {font-weight: bold;}
 .task-btns {width: 150px; margin-left: 20px; text-align: center;}
 
-.task-item-done.task-item {
+.task-item-done {
   background-color: #f5f5f5;
 }
 .task-item-done .task-img,
@@ -161,4 +164,30 @@ export default {
   font-size: 14px;
 }
 .task-create-date {padding-top: 10px;}
+
+#task-wrap.task-wrap-grid .task-container {
+  width: calc(50% - 10px);
+}
+
+#task-wrap.task-wrap-grid .task-img,
+#task-wrap.task-wrap-grid .task-btns {
+  width: calc(50% - 20px);
+}
+#task-wrap.task-wrap-grid .task-txt {
+  width: 100%;
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+  padding-top: 20px;
+}
+#task-wrap.task-wrap-grid .task-create-date {
+  -webkit-box-ordinal-group: 4;
+  -ms-flex-order: 3;
+  order: 3;
+}
+#task-wrap.task-wrap-grid .task-edited {
+  -webkit-box-ordinal-group: 5;
+  -ms-flex-order: 4;
+  order: 4;
+}
 </style>

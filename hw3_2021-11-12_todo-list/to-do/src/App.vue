@@ -2,34 +2,38 @@
   <div id="app">
 
 
-    <div v-if="user.userLogin" id="wrapper">
+      <div v-if="user.userLogin" id="wrapper">
+        <transition name="slide-fade">
+          <div v-show="show" id="task-page">
+            <action-button @btn-click="logOut">Log Out</action-button>
 
-      <action-button @btn-click="logOut">Log Out</action-button>
+            <h1>{{user.userLogin}}'s To Do List</h1>
 
-      <h1>{{user.userLogin}}'s To Do List</h1>
+              <task-wrap
+                :user-data="user.userData"
+                @change-user="changeUser"
+              />
 
-
-      <task-wrap
-        :user-data="user.userData"
-        @change-user="changeUser"
-      />
-
-    </div>
+          </div>
+        </transition>
+      </div>
 
     <div v-else id="startPage">
       <action-button @btn-click="logIn">Sign Up or Log In</action-button>
 
-      <popup
-          v-show="popup"
-          @close-popup="closePopup"
-      >
-        <login-form
-            @add-user="addUser"
-            @check-user="checkUser"
-            :existing="userExists"
-            :correct="incorrectCreds"
-        ></login-form>
-      </popup>
+      <transition name="fade">
+        <popup
+            v-show="popup"
+            @close-popup="closePopup"
+        >
+          <login-form
+              @add-user="addUser"
+              @check-user="checkUser"
+              :existing="userExists"
+              :correct="incorrectCreds"
+          ></login-form>
+        </popup>
+      </transition>
     </div>
 
   </div>
@@ -61,7 +65,8 @@ export default {
       popup: false,
       userExists: true,
       incorrectCreds: false,
-      user: {}
+      user: {},
+      show: true
     }
   },
 
@@ -230,7 +235,7 @@ h1 {
 
 }
 
-#wrapper > button:first-child,
+#task-page > button:first-child,
 #startPage > button:first-child {
   margin-bottom: 20px;
   position: relative;
@@ -242,4 +247,27 @@ h1 {
   margin-right: 20px;
   margin-top: 20px;
 }
+
+/* popup animation */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+/* /popup animation */
+
+/* tasks animation */
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(50px);
+  opacity: 0;
+}
+/* /tasks animation */
 </style>

@@ -8,7 +8,7 @@
       <label>Task Description</label><input-text v-bind:input.sync="editingTask.taskDescription" />
     </div>
     <div class="edit-item">
-      <label>Task Image URL</label><input-text v-bind:input.sync="editingTask.taskImgUrl" />
+      <label>Task Image URL (.png or .jpg only)</label><input-text v-bind:input.sync="editingTask.taskImgUrl" />
     </div>
     <div class="edit-btns">
       <action-button @btn-click="saveTask">Save</action-button>
@@ -16,6 +16,7 @@
     </div>
 
     <p class="error" v-show="showError">{{ errorMsg }}</p>
+    <p class="error" v-show="imgError">{{ errorImgMsg }}</p>
 
 
   </div>
@@ -40,6 +41,8 @@ export default {
       editingTask: Object.assign({}, this.task),
       showError: false,
       errorMsg: 'Please fill in at least one field',
+      imgError: false,
+      errorImgMsg: 'Incorrect image file extension.'
     }
   },
 
@@ -65,10 +68,42 @@ export default {
         return;
       }
 
+      if (this.editingTask.taskImgUrl !== '') {
+
+        if(!this.checkImg(this.editingTask.taskImgUrl)) {
+          this.imgError = true;
+          return;
+        }
+
+      }
+
+      this.imgError = false;
       this.showError = false;
 
       this.$emit('save-task', this.editingTask);
     },
+
+    /**
+     * проверка расширения изображения
+     * @param url - введённый в инпут URL изображения
+     * @returns {boolean} - true, если расширение подходит, false -есть нет
+     */
+    checkImg(url) {
+
+      if (url.indexOf('?') !== -1) {
+        url = url.slice(0, url.indexOf('?'));
+      }
+      if (url.indexOf('#') !== -1) {
+        url = url.slice(0, url.indexOf('#'));
+      }
+      let ext = url.slice(-4);
+
+      if (ext !== '.jpg' && ext !== '.png') {
+        return false;
+      }
+      return true;
+
+    }
   }
 
 
