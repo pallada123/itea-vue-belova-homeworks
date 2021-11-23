@@ -1,10 +1,10 @@
 <template>
   <div id="app">
 
-    <main-menu :menu-items="routs" />
+    <router-view name="menu" :menu-items="routs" />
 
     <transition name="fade">
-      <router-view/>
+      <router-view />
     </transition>
 
   </div>
@@ -12,17 +12,13 @@
 
 <script>
 import router from './router'
-import MainMenu from "./components/MainMenu";
 
 export default {
   data() {
     return {
       routs: router.options.routes
     }
-  },
-  components: {
-    MainMenu
-  },
+  }
 }
 </script>
 

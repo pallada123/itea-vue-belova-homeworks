@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import MainMenu from "../components/MainMenu";
+import ideas from './ideas'
 
 Vue.use(VueRouter)
 
@@ -8,26 +10,46 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    show: true,
+    components: {
+      default: Home,
+      menu: MainMenu
+    }
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue')
+    show: true,
+    components: {
+      default: () => import('../views/About.vue'),
+      menu: MainMenu
+    }
   },
   {
     path: '/contacts',
     name: 'Contacts',
-    component: () => import('../views/Contacts.vue')
+    show: true,
+    components: {
+      default: () => import('../views/Contacts.vue'),
+      menu: MainMenu
+    }
   },
-  {
-    path: '/list-of-ideas',
-    name: 'List of Ideas',
-    component: () => import('../views/ListOfIdeas.vue')
-  },
+  // {
+  //   path: '/list-of-ideas',
+  //   name: 'List of Ideas',
+  //   components: {
+  //     default: () => import('../views/ListOfIdeas.vue'),
+  //     menu: MainMenu
+  //   }
+  // },
+  ...ideas,
   {
     path: '*',
-    component: () => import('../views/Page404.vue')
+    show: false,
+    components: {
+      default: () => import('../views/Page404.vue'),
+      menu: MainMenu
+    }
   }
 ]
 
