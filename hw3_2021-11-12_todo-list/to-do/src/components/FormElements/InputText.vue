@@ -7,21 +7,36 @@ export default {
   name: "InputText",
   props: ['input'],
 
-  data() {
-    return {
-      inputValue: this.input,
-    }
-  },
-  watch: {
+  // data() {
+  //   return {
+  //     inputValue: this.input,
+  //   }
+  // },
+  // watch: {
+  //
+  //   /**
+  //    * наблюдает за состоянием инпута. при изменении состояния
+  //    * передаёт в слушатель события в родительском компоненте новое значение input
+  //    */
+  //   inputValue() {
+  //     this.$emit('update:input', this.inputValue);
+  //   },
+  // },
 
-    /**
-     * наблюдает за состоянием инпута. при изменении состояния
-     * передаёт в слушатель события в родительском компоненте новое значение input
-     */
-    inputValue() {
-      this.$emit('update:input', this.inputValue);
-    },
-  },
+  /**
+   * лучше делать с computed, чем с объявление переменной в data и наблюдением в watch.
+   * watch более ресурсоёмкий, его использовать в крайних случаях.
+   */
+  computed: {
+    inputValue: {
+      get() {
+        return this.input;
+      },
+      set(val) {
+        this.$emit('update:input', val);
+      }
+    }
+  }
 }
 </script>
 
@@ -36,7 +51,7 @@ export default {
     color: #000;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    padding: 0px 15px;
+    padding: 0 15px;
     display: inline-block;
     min-width: 1px;
   }
