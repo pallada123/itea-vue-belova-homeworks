@@ -1,27 +1,55 @@
 <template>
-  <div class="watch-form">
+  <form class="watch-form" @reset.prevent>
 
-      <div class="watch-form-item"><label :style="{'color': formStyles.labelColor}">model</label><input type="text" v-model="filters.model" :style="{'background-color': formStyles.bgInput, 'border-color': formStyles.borderInput}"></div>
-      <div class="watch-form-item"><label :style="{'color': formStyles.labelColor}">type</label><input type="text" v-model="filters.type" :style="{'background-color': formStyles.bgInput, 'border-color': formStyles.borderInput}"></div>
+    <input-text
+      :input.sync="filters.model"
+      :label="'Model'"
+    />
+    <input-text
+      :input.sync="filters.type"
+      :label="'Type'"
+    />
 
-      <button v-show="!extraKeys" type="button" @click="$emit('show-more')" :style="{'background-color': formStyles.bgButton, 'border-color': formStyles.borderButton}">Show more</button>
+    <button
+      type="button"
+      v-show="!extraKeys"
+      @click="$emit('show-more')"
+      :style="{'background-color': formStyles.bgButton, 'border-color': formStyles.borderButton}">Show more</button>
 
-      <transition name="showinputs">
-        <div v-show="extraKeys" class="transition-el">
-          <div class="watch-form-item"><label :style="{'color': formStyles.labelColor}">size</label><input type="text" v-model="filters.size" :style="{'background-color': formStyles.bgInput, 'border-color': formStyles.borderInput}"></div>
-          <div class="watch-form-item"><label :style="{'color': formStyles.labelColor}">number</label><input type="text" v-model="filters.number" :style="{'background-color': formStyles.bgInput, 'border-color': formStyles.borderInput}"></div>
-          <div class="watch-form-item"><label :style="{'color': formStyles.labelColor}">color</label><input type="text" v-model="filters.color" :style="{'background-color': formStyles.bgInput, 'border-color': formStyles.borderInput}"></div>
-        </div>
-      </transition>
+    <transition name="showinputs">
+      <div v-show="extraKeys" class="transition-el">
+        <input-text
+          :input.sync="filters.size"
+          :label="'Size'"
+        />
+        <input-text
+          :input.sync="filters.number"
+          :label="'Number'"
+        />
+        <input-text
+          :input.sync="filters.color"
+          :label="'Color'"
+        />
+      </div>
+    </transition>
 
-      <button v-show="sum" type="button" @click="$emit('reset-data')" :style="{'background-color': formStyles.bgButton, 'border-color': formStyles.borderButton}">Reset</button>
+    <button
+      v-show="sum"
+      type="reset"
+      @click="$emit('reset-data')"
+      :style="{'background-color': formStyles.bgButton, 'border-color': formStyles.borderButton}">Reset</button>
 
-  </div>
+  </form>
 </template>
 
 <script>
+import InputText from "../FormElements/InputText";
+
 export default {
   name: "SetWatchForm",
+  components: {
+    InputText
+  },
   props: {
     filters: {
       type: Object,
@@ -58,18 +86,6 @@ export default {
   position: relative;
   margin: 0 auto;
 }
-.watch-form label {
-  display: inline-block; width: 70px;
-  text-align: right;
-  padding: 0 10px 0 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.watch-form input[type='text'] {
-  width: 200px;
-  border: solid 1px #cdcdcd;
-  box-sizing: border-box;
-}
 .watch-form button {
   display: inline-block;
   border-radius: 5px;
@@ -80,5 +96,5 @@ export default {
   line-height: 25px;
 
 }
-.watch-form .watch-form-item {margin-bottom: 10px}
+
 </style>

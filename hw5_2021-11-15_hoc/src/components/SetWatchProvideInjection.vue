@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Set-Watch & Provide-Inject</h2>
+    <h2>Set-Watch &amp; Provide-Inject</h2>
 
     <component :is="theme">
 
