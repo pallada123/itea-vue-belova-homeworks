@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
 
-    <span class="nav-item" v-for="item in menuItems.filter((it) => it.show)">
+    <span class="nav-item" v-for="item in menuItems.filter((it) => !it.hidden)">
 
       <span v-if="item.name" :key="item.name">
         <router-link :to="item.path">{{ item.name }}</router-link>

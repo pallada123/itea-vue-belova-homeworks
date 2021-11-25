@@ -1,7 +1,7 @@
 <template>
   <div id="user-page">
 
-    <div v-if="!isLoadedUser">Loading...</div>
+    <div v-if="!(isLoadedUser && isLoadedUserPosts)">Loading...</div>
 
     <div v-else>
       <h2>{{ User.username }}</h2>
@@ -17,13 +17,12 @@
 
       <h3>{{ User.username }}'s posts:</h3>
 
-      <div v-if="!isLoadedUserPosts">Loading...</div>
-
-      <ul v-else>
+      <ul>
         <li v-for="post in UserPosts" :key="post.id">
           <router-link :to="{name: 'UserPost', params: { postId: post.id }}">{{ post.title }}</router-link>
         </li>
       </ul>
+
     </div>
 
     <transition name="popup">

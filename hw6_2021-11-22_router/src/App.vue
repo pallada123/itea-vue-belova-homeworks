@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <router-view name="menu" :menu-items="routs" />
+    <router-view name="menu" :menu-items="routes" />
 
     <prev-next-nav />
 
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      routs: router.options.routes
+      routes: router.options.routes
     }
   }
 }

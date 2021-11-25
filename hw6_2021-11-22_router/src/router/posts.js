@@ -7,7 +7,6 @@ export default [
     {
         path: '/posts',
         name: 'Posts',
-        show: true,
         components: {
             default: Posts,
             menu: MainMenu
@@ -26,7 +25,7 @@ export default [
     {
         path: '/posts/user-:userId',
         name: 'User',
-        show: false,
+        hidden: true,
         components: {
             default: User,
             menu: MainMenu

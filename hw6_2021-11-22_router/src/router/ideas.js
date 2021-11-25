@@ -6,7 +6,6 @@ export default [
     {
         path: '/list-of-ideas',
         name: 'List of Ideas',
-        show: true,
         components: {
             default: ListOfIdeas,
             menu: MainMenu
@@ -15,7 +14,7 @@ export default [
     {
         path: '/list-of-ideas/idea-:id',
         name: 'Idea',
-        show: false,
+        hidden: true,
         components: {
             default: Idea,
             menu: MainMenu

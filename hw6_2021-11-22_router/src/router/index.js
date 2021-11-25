@@ -12,7 +12,6 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    show: true,
     components: {
       default: Home,
       menu: MainMenu,
@@ -22,7 +21,6 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    show: true,
     components: {
       default: () => import('../views/About.vue'),
       menu: MainMenu,
@@ -32,7 +30,6 @@ const routes = [
   {
     path: '/contacts',
     name: 'Contacts',
-    show: true,
     components: {
       default: () => import('../views/Contacts.vue'),
       menu: MainMenu,
@@ -43,7 +40,7 @@ const routes = [
   ...posts,
   {
     path: '*',
-    show: false,
+    hidden: true,
     components: {
       default: () => import('../views/Page404.vue'),
       menu: MainMenu,
