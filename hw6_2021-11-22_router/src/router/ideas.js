@@ -5,7 +5,7 @@ import MainMenu from "../components/MainMenu";
 export default [
     {
         path: '/list-of-ideas',
-        name: 'ListOfIdeas',
+        name: 'List of Ideas',
         show: true,
         components: {
             default: ListOfIdeas,
@@ -13,7 +13,7 @@ export default [
         }
     },
     {
-        path: '/list-of-ideas/:id',
+        path: '/list-of-ideas/idea-:id',
         name: 'Idea',
         show: false,
         components: {

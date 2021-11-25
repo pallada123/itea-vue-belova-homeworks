@@ -1,10 +1,8 @@
 <template>
-  <div class="card border-1">
-    <img :src="singleIdea.img" alt="" class="card-img-top">
-    <div class="card-body">
-      <div class="card-title">{{ singleIdea.title }}</div>
-      <div class="card-text">{{ singleIdea.desc }}</div>
-    </div>
+  <div class="idea">
+    <img :src="singleIdea.img" alt="">
+    <div class="idea-title">{{ singleIdea.title }}</div>
+    <div class="idea-text">{{ singleIdea.desc }}</div>
   </div>
 </template>
 
@@ -25,5 +23,6 @@ export default {
 </script>
 
 <style scoped>
-
+.idea {text-align: center;}
+.idea-title {font-weight: bold; margin: 10px 0;}
 </style>

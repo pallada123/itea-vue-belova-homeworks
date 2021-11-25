@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import MainMenu from "../components/MainMenu";
+import PrevNextNav from '../components/PrevNextNav'
 import ideas from './ideas'
+import posts from './posts'
 
 Vue.use(VueRouter)
 
@@ -13,7 +15,8 @@ const routes = [
     show: true,
     components: {
       default: Home,
-      menu: MainMenu
+      menu: MainMenu,
+      nextPrev: PrevNextNav
     }
   },
   {
@@ -22,7 +25,8 @@ const routes = [
     show: true,
     components: {
       default: () => import('../views/About.vue'),
-      menu: MainMenu
+      menu: MainMenu,
+      nextPrev: PrevNextNav
     }
   },
   {
@@ -31,24 +35,19 @@ const routes = [
     show: true,
     components: {
       default: () => import('../views/Contacts.vue'),
-      menu: MainMenu
+      menu: MainMenu,
+      nextPrev: PrevNextNav
     }
   },
-  // {
-  //   path: '/list-of-ideas',
-  //   name: 'List of Ideas',
-  //   components: {
-  //     default: () => import('../views/ListOfIdeas.vue'),
-  //     menu: MainMenu
-  //   }
-  // },
   ...ideas,
+  ...posts,
   {
     path: '*',
     show: false,
     components: {
       default: () => import('../views/Page404.vue'),
-      menu: MainMenu
+      menu: MainMenu,
+      nextPrev: PrevNextNav
     }
   }
 ]

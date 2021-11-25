@@ -1,12 +1,8 @@
 <template>
-  <div class="card">
-    <img :src="singleIdea.img" alt="" class="card-img-top">
-    <div class="card-body">
-      <div class="card-title">{{ singleIdea.title }}</div>
-    </div>
-    <div class="card-footer">
-      <router-link :to="{name: 'Idea', params: { id: singleIdea.id }}" class="card-link">Read more</router-link>
-    </div>
+  <div>
+    <img :src="singleIdea.img" alt="">
+    <div class="idea-card-title">{{ singleIdea.title }}</div>
+    <router-link :to="{name: 'Idea', params: { id: singleIdea.id }}" class="card-link">Read more</router-link>
   </div>
 </template>
 
@@ -24,5 +20,5 @@ export default {
 </script>
 
 <style scoped>
-
+.idea-card img {width: 100%; margin-bottom: 10px;}
 </style>
