@@ -15,6 +15,7 @@ export default [
             {
                 path: '/posts/post-:postId',
                 name: 'Post',
+                parent: '/',
                 components: {
                     default: Post,
                     menu: MainMenu
@@ -34,6 +35,7 @@ export default [
             {
                 path: '/posts/user-:userId/post-:postId',
                 name: 'UserPost',
+                parent: 'User',
                 components: {
                     default: Post,
                     menu: MainMenu
