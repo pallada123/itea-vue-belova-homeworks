@@ -2,9 +2,11 @@
   <div>
     <h1>Posts</h1>
     <div class="posts-container">
-      <ul>
+
+      <div v-if="!isLoadedPostsList">Loading...</div>
+      <ul v-else>
         <li v-for="post in PostsList" :key="post.id">
-          <router-link :to="{name: 'Post', params: { id: post.id }}">{{ post.title }}</router-link>
+          <router-link :to="{name: 'Post', params: { postId: post.id }}">{{ post.title }}</router-link>
         </li>
       </ul>
     </div>

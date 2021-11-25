@@ -6,14 +6,15 @@
 
       <div id="popup-content">
 
-        <div v-if="SinglePost.id === $route.params.id">
+        <div v-if="!(isLoadedSinglePost && isLoadedUser)">Loading...</div>
+
+        <div v-else>
           <p class="post-title">{{ SinglePost.title }}</p>
           <p>{{ SinglePost.body }}</p>
 
-          <router-link :to="{name: 'User', params: { id: User.id }}">{{ User.username }}</router-link>
+          <router-link :to="{name: 'User', params: { userId: User.id }}">{{ User.username }}</router-link>
         </div>
 
-        <div v-else>Loading...</div>
       </div>
 
       <button type="button" class="popup-close" @click="goPrev"></button>
@@ -30,16 +31,6 @@ import {actions, getters} from "../store";
 export default {
   name: "Post",
 
-  data() {
-    return {
-      postId: null
-    }
-  },
-
-  mounted() {
-    this.postId = this.$route.params.id;
-  },
-
   computed: {
     ...getters
   },
@@ -50,7 +41,7 @@ export default {
   beforeCreate() {
     const vm = this
     setTimeout(() => {
-      vm.getSinglePost(this.postId)
+      vm.getSinglePost(this.$route.params.postId)
     }, 200)
   },
 
@@ -67,7 +58,8 @@ export default {
      * то есть пользователь просто закрывает попап и видит страницу, поверх которой попап отрисовывался.
      */
     goPrev() {
-      this.$router.go(-1)
+      this.$router.go(-1);
+      this.clearSinglePost();
     }
 
 

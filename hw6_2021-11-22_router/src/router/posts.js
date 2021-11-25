@@ -14,7 +14,7 @@ export default [
         },
         children: [
             {
-                path: '/post-:id',
+                path: '/posts/post-:postId',
                 name: 'Post',
                 components: {
                     default: Post,
@@ -24,7 +24,7 @@ export default [
         ]
     },
     {
-        path: '/posts/user-:id',
+        path: '/posts/user-:userId',
         name: 'User',
         show: false,
         components: {
@@ -33,7 +33,7 @@ export default [
         },
         children: [
             {
-                path: '/post-:id',
+                path: '/posts/user-:userId/post-:postId',
                 name: 'UserPost',
                 components: {
                     default: Post,

@@ -4,7 +4,11 @@ const state = Vue.observable({
   PostsList: [],
   User: {},
   SinglePost: {},
-  UserPosts: []
+  UserPosts: [],
+  isLoadedPostsList: false,
+  isLoadedUser: false,
+  isLoadedSinglePost: false,
+  isLoadedUserPosts: false
 })
 
 export const actions = {
@@ -15,10 +19,12 @@ export const actions = {
    * @returns {Promise<void>}
    */
   async getPostsList() {
+    mutations.setIsLoadedPostsList(false);
     try {
       let data = await fetch('https://jsonplaceholder.typicode.com/posts');
       data = await data.json();
       mutations.setPostsList(data);
+      mutations.setIsLoadedPostsList(true);
     } catch (err) {
       console.log(err);
     }
@@ -31,10 +37,12 @@ export const actions = {
    * @returns {Promise<void>}
    */
   async getUser(userId) {
+    mutations.setIsLoadedUser(false);
     try {
       let data = await fetch('https://jsonplaceholder.typicode.com/users/' + userId);
       data = await data.json();
       mutations.setUser(data);
+      mutations.setIsLoadedUser(true);
     } catch (err) {
       console.log(err);
     }
@@ -47,10 +55,12 @@ export const actions = {
    * @returns {Promise<void>}
    */
   async getUserPosts(userId) {
+    mutations.setIsLoadedUserPosts(false);
     try {
       let data = await fetch('https://jsonplaceholder.typicode.com/posts?userId=' + userId);
       data = await data.json();
       mutations.setUserPosts(data);
+      mutations.setIsLoadedUserPosts(true);
     } catch (err) {
       console.log(err);
     }
@@ -68,16 +78,23 @@ export const actions = {
    * @returns {Promise<void>}
    */
   async getSinglePost(postId) {
+    mutations.setIsLoadedSinglePost(false);
     try {
       let data = await fetch('https://jsonplaceholder.typicode.com/posts/' + postId);
       data = await data.json();
       mutations.setSinglePost(data);
+      mutations.setIsLoadedSinglePost(true);
       if (data.userId !== this.User.id) {
         await this.getUser(data.userId);
       }
     } catch (err) {
       console.log(err);
     }
+  },
+
+  clearSinglePost() {
+    mutations.setSinglePost({});
+    mutations.setIsLoadedSinglePost(false);
   }
 
 }
@@ -86,12 +103,20 @@ export const mutations = {
   setPostsList: payload => state.PostsList = payload,
   setUser: payload => state.User = payload,
   setUserPosts: payload => state.UserPosts = payload,
-  setSinglePost: payload => state.SinglePost = payload
+  setSinglePost: payload => state.SinglePost = payload,
+  setIsLoadedPostsList: payload => state.isLoadedPostsList = payload,
+  setIsLoadedUser: payload => state.isLoadedUser = payload,
+  setIsLoadedUserPosts: payload => state.isLoadedUserPosts = payload,
+  setIsLoadedSinglePost: payload => state.isLoadedSinglePost = payload
 }
 
 export const getters = {
   PostsList: () => state.PostsList,
   User: () => state.User,
   UserPosts: () => state.UserPosts,
-  SinglePost: () => state.SinglePost
+  SinglePost: () => state.SinglePost,
+  isLoadedPostsList: () => state.isLoadedPostsList,
+  isLoadedUser: () => state.isLoadedUser,
+  isLoadedUserPosts: () => state.isLoadedUserPosts,
+  isLoadedSinglePost: () => state.isLoadedSinglePost
 }

@@ -1,23 +1,30 @@
 <template>
   <div id="user-page">
-    <h2>{{ User.username }}</h2>
 
-    <table>
-      <tr><td>Name:</td><td>{{ User.name }}</td></tr>
-      <tr><td>Email:</td><td>{{ User.email }}</td></tr>
-      <tr><td>Address:</td><td>{{ User.address.street }}<br>{{ User.address.suite }}<br>{{ User.address.city }}<br>{{ User.address.zipcode }}</td></tr>
-      <tr><td>Phone:</td><td>{{ User.phone }}</td></tr>
-      <tr><td>Website:</td><td>{{ User.website }}</td></tr>
-      <tr><td>Company:</td><td>{{ User.company.name }}</td></tr>
-    </table>
+    <div v-if="!isLoadedUser">Loading...</div>
 
-    <h3>{{ User.username }}'s posts:</h3>
+    <div v-else>
+      <h2>{{ User.username }}</h2>
 
-    <ul>
-      <li v-for="post in UserPosts" :key="post.id">
-        <router-link :to="{name: 'UserPost', params: { id: post.id }}">{{ post.title }}</router-link>
-      </li>
-    </ul>
+      <table>
+        <tr><td>Name:</td><td>{{ User.name }}</td></tr>
+        <tr><td>Email:</td><td>{{ User.email }}</td></tr>
+        <tr><td>Address:</td><td>{{ User.address.street }}<br>{{ User.address.suite }}<br>{{ User.address.city }}<br>{{ User.address.zipcode }}</td></tr>
+        <tr><td>Phone:</td><td>{{ User.phone }}</td></tr>
+        <tr><td>Website:</td><td>{{ User.website }}</td></tr>
+        <tr><td>Company:</td><td>{{ User.company.name }}</td></tr>
+      </table>
+
+      <h3>{{ User.username }}'s posts:</h3>
+
+      <div v-if="!isLoadedUserPosts">Loading...</div>
+
+      <ul v-else>
+        <li v-for="post in UserPosts" :key="post.id">
+          <router-link :to="{name: 'UserPost', params: { postId: post.id }}">{{ post.title }}</router-link>
+        </li>
+      </ul>
+    </div>
 
     <transition name="popup">
       <router-view />
@@ -31,16 +38,6 @@ import {actions, getters} from "../store";
 export default {
   name: "User",
 
-  data() {
-    return {
-      userId: null
-    }
-  },
-
-  mounted() {
-    this.userId = this.$route.params.id;
-  },
-
 
   computed: {
     ...getters
@@ -52,8 +49,8 @@ export default {
   beforeCreate() {
     const vm = this
     setTimeout(() => {
-      vm.getUser(this.userId);
-      vm.getUserPosts(this.userId);
+      vm.getUser(this.$route.params.userId);
+      vm.getUserPosts(this.$route.params.userId);
     }, 0)
   },
 
