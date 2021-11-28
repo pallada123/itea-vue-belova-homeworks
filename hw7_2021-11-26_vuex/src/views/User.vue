@@ -32,35 +32,29 @@
 </template>
 
 <script>
-import {actions, getters} from "../store";
+import {mapState} from "vuex";
+import {GET_POSTS_USER, GET_POSTS_USER_POSTS} from "../types/actions";
 
 export default {
   name: "User",
 
-
   computed: {
-    ...getters
+    ...mapState({
+      User: state => state.posts.User,
+      isLoadedUser: state => state.posts.isLoadedUser,
+      UserPosts: state => state.posts.UserPosts,
+      isLoadedUserPosts: state => state.posts.isLoadedUserPosts,
+    })
   },
 
   /**
-   * отложенно (чтобы this уже был) вызывает метод получения одного юзера из хока
+   * инициирует получение в стор одного юзера и постов одного юзера
    */
   beforeCreate() {
-    const vm = this
-    setTimeout(() => {
-      vm.getUser(this.$route.params.userId);
-      vm.getUserPosts(this.$route.params.userId);
-    }, 0)
-  },
-
-  methods: {
-
-    /**
-     * принимает методы из хока
-     */
-    ...actions
-
+    this.$store.dispatch(GET_POSTS_USER, this.$route.params.userId);
+    this.$store.dispatch(GET_POSTS_USER_POSTS, this.$route.params.userId);
   }
+
 }
 </script>
 

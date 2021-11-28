@@ -7,18 +7,25 @@
 </template>
 
 <script>
-import ideasData from '../data/ideasData.js'
+
+import {mapState} from 'vuex'
+import {GET_IDEAS_SINGLE_IDEA} from "../types/actions";
 
 export default {
-  name: 'Idea',
-  data() {
-    return {
-      singleIdea: {}
-    }
+  name: "Idea",
+
+  computed: {
+    ...mapState({
+      singleIdea: state => state.ideas.singleIdea
+    })
   },
-  mounted() {
-    this.singleIdea = ideasData.find(item => item.id == this.$route.params.id)
-  }
+
+  /**
+   * инициирует получение одной idea
+   */
+  beforeCreate() {
+      this.$store.dispatch(GET_IDEAS_SINGLE_IDEA, this.$route.params.id);
+  },
 }
 </script>
 

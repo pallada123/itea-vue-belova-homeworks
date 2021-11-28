@@ -17,32 +17,25 @@
 </template>
 
 <script>
-import {actions, getters} from "../store";
+
+import {mapState} from 'vuex'
+import {GET_POSTS_POSTS_LIST} from "../types/actions";
 
 export default {
   name: "Posts",
 
   computed: {
-  ...getters
+    ...mapState({
+      PostsList: state => state.posts.PostsList,
+      isLoadedPostsList: state => state.posts.isLoadedPostsList
+    })
   },
 
   /**
-   * отложенно (чтобы this уже был) вызывает метод получения списка постов из хока
+   * инициирует получение в стор списка постов
    */
   beforeCreate() {
-    const vm = this
-    setTimeout(() => {
-      vm.getPostsList()
-    }, 0)
-  },
-
-  methods: {
-
-    /**
-     * принимает методы из хока
-     */
-  ...actions
-
+    this.$store.dispatch(GET_POSTS_POSTS_LIST);
   }
 }
 </script>

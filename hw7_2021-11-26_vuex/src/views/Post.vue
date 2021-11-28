@@ -26,31 +26,29 @@
 </template>
 
 <script>
-import {actions, getters} from "../store";
+import {mapState} from 'vuex'
+import {GET_POSTS_SINGLE_POST, CLEAR_POSTS_SINGLE_POST} from "../types/actions";
 
 export default {
   name: "Post",
 
   computed: {
-    ...getters
+    ...mapState({
+      SinglePost: state => state.posts.SinglePost,
+      isLoadedSinglePost: state => state.posts.isLoadedSinglePost,
+      User: state => state.posts.User,
+      isLoadedUser: state => state.posts.isLoadedUser,
+    })
   },
 
   /**
-   * отложенно (чтобы this уже был) вызывает метод получения одного поста из хока
+   * инициирует получение в стор одного поста
    */
   beforeCreate() {
-    const vm = this
-    setTimeout(() => {
-      vm.getSinglePost(this.$route.params.postId)
-    }, 200)
+    this.$store.dispatch(GET_POSTS_SINGLE_POST, this.$route.params.postId);
   },
 
   methods: {
-
-    /**
-     * принимает методы из хока
-     */
-    ...actions,
 
     /**
      * отсекает от пути текущего маршрута часть от последнего слэша до конца,
@@ -63,15 +61,14 @@ export default {
      * сначала сделала просто router.go(-1), но если открыть в новой вкладке, предыдущей страницы в истории нет.
      * а как лучше перейти на родительский роут, я не придумала)
      *
-     * после перенаправления вызывается метод очистки переменной SinglePost
+     * после перенаправления отправляет в стор запрос на очистку объекта одного поста
      * (чтобы при открытии второго и далее попапа не видеть, как один текст заменяется на другой)
      */
     goPrev() {
       let index = this.$route.path.lastIndexOf('/');
       this.$router.push(this.$route.path.slice(0, index));
-      this.clearSinglePost();
+      this.$store.dispatch(CLEAR_POSTS_SINGLE_POST);
     }
-
 
   }
 }

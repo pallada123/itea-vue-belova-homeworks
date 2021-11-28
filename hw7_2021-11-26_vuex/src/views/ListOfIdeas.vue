@@ -11,7 +11,7 @@
 
 <script>
 
-import ideasData from '../data/ideasData'
+import {mapState} from 'vuex'
 import IdeaCard from "../components/IdeaCard";
 
 export default {
@@ -21,10 +21,10 @@ export default {
     IdeaCard,
   },
 
-  data() {
-    return {
-      ideasData,
-    }
+  computed: {
+    ...mapState({
+      ideasData: state => state.ideas.ideasData
+    })
   },
 }
 </script>
