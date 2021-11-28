@@ -1,0 +1,2 @@
+// export const A_GET_NEWS_CATS = 'A_GET_NEWS_CATS'
+// export const A_GET_NEWS_SINGLE_CAT = 'A_GET_NEWS_SINGLE_CAT'

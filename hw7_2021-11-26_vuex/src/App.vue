@@ -1,12 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+
+    <router-view name="menu" :menu-items="routes" />
+
+    <prev-next-nav />
+
+    <transition name="fade">
+      <router-view />
+    </transition>
+
   </div>
 </template>
+
+<script>
+import router from './router';
+import PrevNextNav from "./components/PrevNextNav";
+
+export default {
+  components: {
+    PrevNextNav
+  },
+  data() {
+    return {
+      routes: router.options.routes
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -15,18 +35,24 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+#app * {
+  box-sizing: border-box;
 }
 
-#nav {
-  padding: 30px;
+.fade-enter-active, .fade-live-active {
+  transition: opacity .4s;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

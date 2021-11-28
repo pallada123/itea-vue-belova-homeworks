@@ -1,0 +1,5 @@
+// export const SET_NEWS_CATS = 'SET_NEWS_CATS'
+// export const SET_IS_LOADED = 'SET_IS_LOADED'
+// export const SET_NEWS_SINGLE_CAT = 'SET_NEWS_SINGLE_CAT'
+// export const SET_NEWS_PER_PAGE = 'SET_NEWS_PER_PAGE'
+// export const SET_NEWS_TOTAL = 'SET_NEWS_TOTAL'
