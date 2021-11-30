@@ -1,7 +1,7 @@
 import {SET_COUNTER_NUMBER} from '../types/mutations'
 
 export default {
-    namespace: true,
+    namespaced: true,
 
     state: () => ({
         count: 0

@@ -25,9 +25,9 @@ export default {
   name: "Posts",
 
   computed: {
-    ...mapState({
-      PostsList: state => state.posts.PostsList,
-      isLoadedPostsList: state => state.posts.isLoadedPostsList
+    ...mapState('posts/', {
+      PostsList: state => state.PostsList,
+      isLoadedPostsList: state => state.isLoadedPostsList
     })
   },
 
@@ -35,7 +35,7 @@ export default {
    * инициирует получение в стор списка постов
    */
   beforeCreate() {
-    this.$store.dispatch(GET_POSTS_POSTS_LIST);
+    this.$store.dispatch(`posts/${GET_POSTS_POSTS_LIST}`);
   }
 }
 </script>

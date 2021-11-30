@@ -39,11 +39,11 @@ export default {
   name: "User",
 
   computed: {
-    ...mapState({
-      User: state => state.posts.User,
-      isLoadedUser: state => state.posts.isLoadedUser,
-      UserPosts: state => state.posts.UserPosts,
-      isLoadedUserPosts: state => state.posts.isLoadedUserPosts,
+    ...mapState('posts/', {
+      User: state => state.User,
+      isLoadedUser: state => state.isLoadedUser,
+      UserPosts: state => state.UserPosts,
+      isLoadedUserPosts: state => state.isLoadedUserPosts,
     })
   },
 
@@ -51,8 +51,8 @@ export default {
    * инициирует получение в стор одного юзера и постов одного юзера
    */
   beforeCreate() {
-    this.$store.dispatch(GET_POSTS_USER, this.$route.params.userId);
-    this.$store.dispatch(GET_POSTS_USER_POSTS, this.$route.params.userId);
+    this.$store.dispatch(`posts/${GET_POSTS_USER}`, this.$route.params.userId);
+    this.$store.dispatch(`posts/${GET_POSTS_USER_POSTS}`, this.$route.params.userId);
   }
 
 }

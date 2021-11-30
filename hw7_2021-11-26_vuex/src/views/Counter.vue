@@ -13,8 +13,8 @@ export default {
   name: "Counter",
 
   computed: {
-    ...mapState({
-      number: state => state.counter.count
+    ...mapState('counter/', {
+      number: state => state.count
     })
   },
 
@@ -24,7 +24,7 @@ export default {
      * по клику на кнопку инициирует мутацию в сторе количества кликов
      */
     increment() {
-      this.$store.commit(SET_COUNTER_NUMBER);
+      this.$store.commit(`counter/${SET_COUNTER_NUMBER}`);
     }
   },
 }

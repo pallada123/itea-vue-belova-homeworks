@@ -3,7 +3,7 @@ import {GET_IDEAS_SINGLE_IDEA} from '../types/actions'
 import ideasData from '../data/ideasData.js'
 
 export default {
-    namespace: true,
+    namespaced: true,
     state: () => ({
         ideasData,
         singleIdea: {}

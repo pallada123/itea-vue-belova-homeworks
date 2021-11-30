@@ -33,11 +33,11 @@ export default {
   name: "Post",
 
   computed: {
-    ...mapState({
-      SinglePost: state => state.posts.SinglePost,
-      isLoadedSinglePost: state => state.posts.isLoadedSinglePost,
-      User: state => state.posts.User,
-      isLoadedUser: state => state.posts.isLoadedUser,
+    ...mapState('posts/', {
+      SinglePost: state => state.SinglePost,
+      isLoadedSinglePost: state => state.isLoadedSinglePost,
+      User: state => state.User,
+      isLoadedUser: state => state.isLoadedUser,
     })
   },
 
@@ -45,7 +45,7 @@ export default {
    * инициирует получение в стор одного поста
    */
   beforeCreate() {
-    this.$store.dispatch(GET_POSTS_SINGLE_POST, this.$route.params.postId);
+    this.$store.dispatch(`posts/${GET_POSTS_SINGLE_POST}`, this.$route.params.postId);
   },
 
   methods: {
@@ -67,7 +67,7 @@ export default {
     goPrev() {
       let index = this.$route.path.lastIndexOf('/');
       this.$router.push(this.$route.path.slice(0, index));
-      this.$store.dispatch(CLEAR_POSTS_SINGLE_POST);
+      this.$store.dispatch(`posts/${CLEAR_POSTS_SINGLE_POST}`);
     }
 
   }

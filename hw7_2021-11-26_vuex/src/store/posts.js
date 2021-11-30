@@ -18,7 +18,7 @@ import {
 } from '../types/actions'
 
 export default {
-  namespace: true,
+  namespaced: true,
   state: () => ({
     PostsList: [],
     User: {},

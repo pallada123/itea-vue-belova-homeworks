@@ -15,8 +15,8 @@ export default {
   name: "Idea",
 
   computed: {
-    ...mapState({
-      singleIdea: state => state.ideas.singleIdea
+    ...mapState('ideas/', {
+      singleIdea: state => state.singleIdea
     })
   },
 
@@ -24,7 +24,7 @@ export default {
    * инициирует получение одной idea
    */
   beforeCreate() {
-      this.$store.dispatch(GET_IDEAS_SINGLE_IDEA, this.$route.params.id);
+      this.$store.dispatch(`ideas/${GET_IDEAS_SINGLE_IDEA}`, this.$route.params.id);
   },
 }
 </script>

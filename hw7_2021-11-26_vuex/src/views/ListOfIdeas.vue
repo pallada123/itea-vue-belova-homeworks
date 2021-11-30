@@ -22,8 +22,8 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      ideasData: state => state.ideas.ideasData
+    ...mapState('ideas/', {
+      ideasData: state => state.ideasData
     })
   },
 }
