@@ -1,62 +1,78 @@
+import api from '../api'
+
 import {
-  // SET_POSTS_POSTS_LIST,
-  // SET_POSTS_USER,
-  // SET_POSTS_SINGLE_POST,
-  // SET_POSTS_USER_POSTS,
-  // SET_POSTS_IS_LOADED_POSTS_LIST,
-  // SET_POSTS_IS_LOADED_USER,
-  // SET_POSTS_IS_LOADED_SINGLE_POST,
-  // SET_POSTS_IS_LOADED_USER_POSTS
-} from '../types/mutations'
+  SET_ACTIVE_USER_ID,
+  SET_USERS_LIST,
+  SET_USER_TODO_LIST
+} from '../types/mutations';
+
 import {
-  // GET_POSTS_POSTS_LIST,
-  // GET_POSTS_USER,
-  // GET_POSTS_USER_POSTS,
-  // GET_POSTS_SINGLE_POST,
-  // CLEAR_POSTS_SINGLE_POST
-} from '../types/actions'
+  PUSH_TEST_STORAGE,
+  ADD_USER,
+  GET_ACTIVE_USER_ID,
+  GET_USERS_LIST,
+  ADD_TODO_ITEM,
+  UPDATE_TODO_ITEM,
+  DELETE_TODO_ITEM
+} from '../types/actions';
+
+const storageName = 'toDoList';
 
 export default {
+
   namespaced: true,
+
   state: () => ({
-    // PostsList: [],
-    // User: {},
-    // SinglePost: {},
-    // UserPosts: [],
-    // isLoadedPostsList: false,
-    // isLoadedUser: false,
-    // isLoadedSinglePost: false,
-    // isLoadedUserPosts: false
+    ActiveUserId: 0,
+    UsersList: [],
+    UserToDoList: []
   }),
 
   mutations: {
-    // [SET_POSTS_POSTS_LIST](state, payload) {
-    //   state.PostsList = payload
-    // },
-    // [SET_POSTS_USER](state, payload) {
-    //   state.User = payload
-    // },
-    // [SET_POSTS_SINGLE_POST](state, payload) {
-    //   state.SinglePost = payload
-    // },
-    // [SET_POSTS_USER_POSTS](state, payload) {
-    //   state.UserPosts = payload
-    // },
-    // [SET_POSTS_IS_LOADED_POSTS_LIST](state, payload) {
-    //   state.isLoadedPostsList = payload
-    // },
-    // [SET_POSTS_IS_LOADED_USER](state, payload) {
-    //   state.isLoadedUser = payload
-    // },
-    // [SET_POSTS_IS_LOADED_SINGLE_POST](state, payload) {
-    //   state.isLoadedSinglePost = payload
-    // },
-    // [SET_POSTS_IS_LOADED_USER_POSTS](state, payload) {
-    //   state.isLoadedUserPosts = payload
-    // }
+    [SET_ACTIVE_USER_ID](state, payload) {
+      state.ActiveUserId = payload
+    },
+    [SET_USERS_LIST](state, payload) {
+      state.UsersList = payload
+    },
+    [SET_USER_TODO_LIST](state, payload) {
+      state.UserToDoList = payload
+    }
   },
 
   actions: {
+
+    /**
+     * for testing only
+     * @returns {*[]|any}
+     */
+    [PUSH_TEST_STORAGE]() {
+      api.pushTestStorage();
+    },
+
+    [ADD_USER]({commit, state, dispatch}) {
+
+    },
+
+    [GET_ACTIVE_USER_ID]({commit}) {
+      commit(SET_ACTIVE_USER_ID, api.getActiveUser());
+    },
+
+    [GET_USERS_LIST]({commit, state, dispatch}) {
+
+    },
+
+    [ADD_TODO_ITEM]({commit, state, dispatch}) {
+
+    },
+
+    [UPDATE_TODO_ITEM]({commit, state, dispatch}) {
+
+    },
+
+    [DELETE_TODO_ITEM]({commit, state, dispatch}) {
+
+    },
 
 
     // async [GET_POSTS_SINGLE_POST]({commit, state, dispatch}, postId) {
