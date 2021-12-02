@@ -1,4 +1,5 @@
 <template>
+
   <div class="task-container" :class="task.isDone ? 'task-item-done' : ''">
 
     <div class="task-item" v-if="isEditing" :class="task.isDone ? 'task-item-done' : ''">
@@ -12,8 +13,7 @@
     <div class="task-item" v-else>
 
       <div class="task-img">
-        <img v-if="task.taskImgUrl" :src="task.taskImgUrl" />
-        <div v-else>No Image</div>
+        <img :src="task.taskImgUrl ? task.taskImgUrl : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'" />
       </div>
       <div class="task-txt">
         <p class="task-head">{{ task.taskName }}</p>
@@ -37,9 +37,9 @@
 
 <script>
 
-import ActionButton from './FormElements/ActionButton.vue';
-import InputText from './FormElements/InputText.vue';
-import EditForm from "./EditForm";
+import ActionButton from '@/components/ActionButton';
+import InputText from '@/components/InputText';
+import EditForm from "@/components/EditForm";
 
 export default {
   name: "Task",
@@ -107,7 +107,7 @@ export default {
       this.isEditing = false;
       editedTask.isEdited = true;
       this.$emit('task-change', editedTask);
-    }
+    },
 
   }
 }

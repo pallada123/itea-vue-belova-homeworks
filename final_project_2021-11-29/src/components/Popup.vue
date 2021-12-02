@@ -72,6 +72,7 @@ button.popup-close {
   transition: all 0.2s linear;
   opacity: 1;
   margin: 0;
+  cursor: pointer;
 }
 button.popup-close:hover {
   -webkit-transform: rotate(-180deg);
@@ -81,14 +82,7 @@ button.popup-close:hover {
 
 #popup-content {
   min-height: 400px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  padding: 50px 20px 20px 20px;
+  text-align: left;
 }
 </style>

@@ -2,21 +2,20 @@ import api from '../api'
 
 import {
   SET_ACTIVE_USER_ID,
+  SET_ACTIVE_USER,
   SET_USERS_LIST,
   SET_USER_TODO_LIST
 } from '../types/mutations';
 
 import {
   PUSH_TEST_STORAGE,
-  ADD_USER,
   GET_ACTIVE_USER_ID,
   GET_USERS_LIST,
-  ADD_TODO_ITEM,
-  UPDATE_TODO_ITEM,
-  DELETE_TODO_ITEM
+  GET_USER_TODO_LIST,
+  CHANGE_ACTIVE_USER_ID,
+  UPDATE_TODO_LIST,
+  UPDATE_USERS_LIST
 } from '../types/actions';
-
-const storageName = 'toDoList';
 
 export default {
 
@@ -24,6 +23,7 @@ export default {
 
   state: () => ({
     ActiveUserId: 0,
+    ActiveUser: {},
     UsersList: [],
     UserToDoList: []
   }),
@@ -31,6 +31,9 @@ export default {
   mutations: {
     [SET_ACTIVE_USER_ID](state, payload) {
       state.ActiveUserId = payload
+    },
+    [SET_ACTIVE_USER](state, payload) {
+      state.ActiveUser = payload
     },
     [SET_USERS_LIST](state, payload) {
       state.UsersList = payload
@@ -50,28 +53,33 @@ export default {
       api.pushTestStorage();
     },
 
-    [ADD_USER]({commit, state, dispatch}) {
-
-    },
-
     [GET_ACTIVE_USER_ID]({commit}) {
       commit(SET_ACTIVE_USER_ID, api.getActiveUser());
     },
 
-    [GET_USERS_LIST]({commit, state, dispatch}) {
-
+    [CHANGE_ACTIVE_USER_ID]({commit}, userId) {
+      commit(SET_ACTIVE_USER_ID, userId);
+      api.setActiveUser(userId)
     },
 
-    [ADD_TODO_ITEM]({commit, state, dispatch}) {
-
+    [GET_USERS_LIST]({commit}) {
+      commit(SET_USERS_LIST, api.getUsersList());
     },
 
-    [UPDATE_TODO_ITEM]({commit, state, dispatch}) {
-
+    [GET_USER_TODO_LIST]({commit, state}) {
+      commit(SET_USER_TODO_LIST, api.getUserToDoList(state.ActiveUserId));
     },
 
-    [DELETE_TODO_ITEM]({commit, state, dispatch}) {
+    [UPDATE_TODO_LIST]({commit, state}, toDoArray) {
+      commit(SET_USER_TODO_LIST, toDoArray);
+      api.updateUserToDoList(state.ActiveUserId, toDoArray)
+    },
 
+    [UPDATE_USERS_LIST]({commit, state, dispatch}, params) {
+      commit(SET_USERS_LIST, params.userList);
+      commit(SET_ACTIVE_USER, params.user);
+      api.updateUsersList(params.user.userId, params.userList);
+      dispatch(CHANGE_ACTIVE_USER_ID, params.user.userId);
     },
 
 

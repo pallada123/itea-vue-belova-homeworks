@@ -1,5 +1,5 @@
 export default {
-    activeUserId: 1,
+    activeUserId: 0,
 
     usersList: [
         {

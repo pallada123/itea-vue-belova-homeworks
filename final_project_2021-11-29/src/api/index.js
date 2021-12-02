@@ -29,7 +29,7 @@ const api =  {
         localStorage.setItem(storageName, JSON.stringify(data));
     },
 
-    addUser(userObject) {
+    updateUsersList(userId, usersArray) {
         const data = this.pullStorage();
 
         if (!data.usersList.length) {
@@ -37,10 +37,10 @@ const api =  {
             data.usersData = [];
         }
 
-        data.usersList.push(userObject);
+        data.usersList = usersArray.map(item => item);
 
         const newUserData = {
-            userId: userObject.userId,
+            userId: userId,
             toDoList: []
         }
 
@@ -62,6 +62,12 @@ const api =  {
         const data = this.pullStorage();
 
         return data.usersData.find((item) => item.userId === userId).toDoList;
+    },
+
+    getUsersList() {
+        const data = this.pullStorage();
+
+        return data.usersList;
     }
 
 };

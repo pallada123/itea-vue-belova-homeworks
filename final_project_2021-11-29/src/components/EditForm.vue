@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import InputText from "./FormElements/InputText";
-import ActionButton from "./FormElements/ActionButton";
+import InputText from "@/components/InputText";
+import ActionButton from "@/components/ActionButton";
 export default {
   name: "EditForm",
   components: {ActionButton, InputText},

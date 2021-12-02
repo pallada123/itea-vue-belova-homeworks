@@ -3,8 +3,29 @@
 </template>
 
 <script>
+
+import {mapState} from 'vuex';
+import {GET_ACTIVE_USER_ID} from "../types/actions";
+
 export default {
-  name: "Todos-completed"
+  name: "Todos-completed",
+  components: {
+
+  },
+
+  computed: {
+    ...mapState('todo/', {
+      ActiveUserId: state => state.ActiveUserId
+    })
+  },
+
+  /**
+   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
+   * @returns {Promise<void>}
+   */
+  beforeCreate() {
+    this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
+  },
 }
 </script>
 

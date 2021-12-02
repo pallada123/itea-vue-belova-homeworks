@@ -41,6 +41,9 @@ const blankTask = {
   isDone: false
 };
 
+
+import {mapState} from 'vuex';
+import {GET_ACTIVE_USER_ID} from "../types/actions";
 import Task from './Task.vue';
 import EditForm from "./EditForm";
 import ActionButton from "./FormElements/ActionButton";
@@ -48,15 +51,10 @@ import ActionButton from "./FormElements/ActionButton";
 export default {
   name: "TaskWrap",
 
-  props: {
-    userData: {
-      type: Array
-    }
-  },
-
   data() {
     return {
       blankTask: Object.assign({}, blankTask),
+      userData: Object.assign({}, this.UserToDoList),
       isAdding: false,
       taskStyle: true // true - list, false - grid
 
@@ -70,6 +68,10 @@ export default {
   },
 
   computed: {
+    ...mapState('todo/', {
+      ActiveUserId: state => state.ActiveUserId,
+      UserToDoList: state => state.UserToDoList
+    }),
 
     /**
      * @returns {string} - текст кнопки переключения статуса (выполнено или нет) в зависимости от статуса
@@ -77,6 +79,14 @@ export default {
     btnCaption() {
       return 'Show ' + (this.taskStyle ? 'grid' : 'list');
     }
+  },
+
+  /**
+   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
+   * @returns {Promise<void>}
+   */
+ beforeCreate() {
+    this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
 
   },
 
