@@ -8,7 +8,7 @@
           <label>Login</label><input-text v-bind:input.sync="credentials.userLogin" />
         </div>
         <div class="login-item">
-          <label>Password</label><input-text v-bind:input.sync="credentials.userPassword" />
+          <label>Password</label><input-text :type="'password'" v-bind:input.sync="credentials.userPassword" />
         </div>
         <div class="task-btns">
           <action-button @btn-click="checkUser">Log In</action-button>

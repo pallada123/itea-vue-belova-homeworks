@@ -115,8 +115,8 @@ export default {
 
 <style scoped>
 .task-container {
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
+  background-color: var(--task-bgcolor);
+  border: 1px solid var(--task-border);
   border-radius: 5px;
   margin: 0 0 20px 0;
   width: auto;
@@ -146,7 +146,7 @@ export default {
 .task-btns {width: 150px; margin-left: 20px; text-align: center;}
 
 .task-item-done {
-  background-color: #f5f5f5;
+  background-color: var(--task-done-bgcolor);
 }
 .task-item-done .task-img,
 .task-item-done .task-txt,

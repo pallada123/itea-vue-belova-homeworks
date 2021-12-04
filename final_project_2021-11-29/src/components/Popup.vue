@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 #popup-overlay {
-  background-color: #000;
+  background-color: var(--popup-overlay-bgcolor);
   opacity: .3;
   width: 100%;
   height: 100%;
@@ -35,7 +35,7 @@ export default {
   left: 0;
 }
 #popup-item {
-  background-color: #fff;
+  background-color: var(--popup-bgcolor);
   -webkit-box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   width: 400px;
@@ -73,6 +73,7 @@ button.popup-close {
   opacity: 1;
   margin: 0;
   cursor: pointer;
+  padding: 0;
 }
 button.popup-close:hover {
   -webkit-transform: rotate(-180deg);

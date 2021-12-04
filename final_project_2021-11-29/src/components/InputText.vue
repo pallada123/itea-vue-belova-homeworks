@@ -1,12 +1,12 @@
 <template>
-  <input type="text" v-model="inputValue" />
+  <input :type="type ? type : 'text'" v-model="inputValue" />
 </template>
 
 <script>
 export default {
   name: "InputText",
 
-  props: ['input'],
+  props: ['input', 'type'],
 
   computed: {
     inputValue: {
@@ -22,16 +22,17 @@ export default {
 </script>
 
 <style scoped>
-  input[type="text"] {
+  input[type="text"],
+  input[type="password"]{
     height: 32px;
     line-height: 32px;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--input-border);
     border-radius: 5px;
     background-clip: padding-box;
-    background-color: #fff;
-    color: #000;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
+    background-color: var(--input-bgcolor);
+    color: var(--input-color);
+    font-family: var(--font-family);
+    font-size: var(--text-size);
     padding: 0 15px;
     display: inline-block;
     min-width: 1px;
@@ -39,6 +40,6 @@ export default {
   input[disabled="disabled"] {opacity: .5;}
 
   .task-item input[type="text"] {
-    background-color: #f5f5f5;
+    background-color: var(--input-task-bgcolor);
   }
 </style>
