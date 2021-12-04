@@ -22,11 +22,10 @@
 <script>
 
 import {mapState} from 'vuex';
-import {GET_USERS_LIST, UPDATE_USERS_LIST} from "../types/actions";
+import {GET_ACTIVE_USER, GET_USERS_LIST, UPDATE_USERS_LIST} from "../types/actions";
 import InputText from "@/components/InputText";
 import ActionButton from "@/components/ActionButton";
 import Popup from "@/components/Popup";
-import Storage from "../../../hw3_2021-11-12_todo-list/to-do/src/data";
 
 export default {
   name: "Registration",
@@ -45,18 +44,17 @@ export default {
   computed: {
     ...mapState('todo/', {
       ActiveUser: state => state.ActiveUser,
-      UsersList: state => state.UsersList,
+      UsersList: state => state.UsersList
 
     })
   },
 
-  /**
-   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
-   * @returns {Promise<void>}
-   */
-  beforeCreate() {
-    this.$store.dispatch(`todo/${GET_USERS_LIST}`);
+
+  async beforeCreate() {
+    await this.$store.dispatch(`todo/${GET_USERS_LIST}`);
+    this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
   },
+
   methods: {
     closePopup() {
       this.$router.push('/');
@@ -73,6 +71,7 @@ export default {
       this.correctCreds = true;
 
       let user = this.UsersList.find(item => item.userLogin === this.credentials.userLogin && item.userPassword === this.credentials.userPassword);
+
       if (!user) {
         user = {
           userId: this.getNewUserId(),
@@ -99,7 +98,7 @@ export default {
      */
     getNewUserId() {
 
-      if (!this.UsersList.length) {
+      if (!(this.UsersList && this.UsersList.length)) {
         return 1;
       }
 

@@ -5,7 +5,7 @@
 <script>
 
 import {mapState} from 'vuex';
-import {GET_ACTIVE_USER_ID} from "../types/actions";
+import {GET_ACTIVE_USER} from "../types/actions";
 
 export default {
   name: "Todos-completed",
@@ -24,7 +24,7 @@ export default {
    * @returns {Promise<void>}
    */
   beforeCreate() {
-    this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
+    this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
   },
 }
 </script>

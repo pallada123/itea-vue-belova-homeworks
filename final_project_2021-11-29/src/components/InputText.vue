@@ -5,28 +5,9 @@
 <script>
 export default {
   name: "InputText",
+
   props: ['input'],
 
-  // data() {
-  //   return {
-  //     inputValue: this.input,
-  //   }
-  // },
-  // watch: {
-  //
-  //   /**
-  //    * наблюдает за состоянием инпута. при изменении состояния
-  //    * передаёт в слушатель события в родительском компоненте новое значение input
-  //    */
-  //   inputValue() {
-  //     this.$emit('update:input', this.inputValue);
-  //   },
-  // },
-
-  /**
-   * лучше делать с computed, чем с объявление переменной в data и наблюдением в watch.
-   * watch более ресурсоёмкий, его использовать в крайних случаях.
-   */
   computed: {
     inputValue: {
       get() {

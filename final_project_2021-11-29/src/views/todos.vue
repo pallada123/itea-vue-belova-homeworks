@@ -2,8 +2,7 @@
   <div>
     <action-button @btn-click="logOut">Log Out</action-button>
 
-      <h1>{{ActiveUser.userLogin}}'s To Do List</h1>
-<!--    <h1>Your To Do List</h1>-->
+      <h1 v-if="ActiveUser">{{ActiveUser.userLogin}}'s To Do List</h1>
 
     <div v-if="isAdding">
 
@@ -48,13 +47,13 @@ const blankTask = {
 
 
 import {mapState} from 'vuex';
-import {GET_ACTIVE_USER_ID, GET_USER_TODO_LIST, UPDATE_TODO_LIST, CHANGE_ACTIVE_USER_ID} from "../types/actions";
+import {GET_ACTIVE_USER, GET_USER_TODO_LIST, UPDATE_TODO_LIST, CHANGE_ACTIVE_USER} from "../types/actions";
 import Task from '@/components/Task';
 import EditForm from "@/components/EditForm";
 import ActionButton from "@/components/ActionButton";
 
 export default {
-  name: "TaskWrap",
+  name: "Todos",
 
   data() {
     return {
@@ -73,7 +72,6 @@ export default {
 
   computed: {
     ...mapState('todo/', {
-      ActiveUserId: state => state.ActiveUserId,
       UserToDoList: state => state.UserToDoList,
       ActiveUser: state => state.ActiveUser
     }),
@@ -91,8 +89,13 @@ export default {
    * @returns {Promise<void>}
    */
   async beforeCreate() {
-    await this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
-    this.$store.dispatch(`todo/${GET_USER_TODO_LIST}`);
+    await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
+    if (!this.ActiveUser) {
+      this.$router.push('/');
+    } else {
+
+      await this.$store.dispatch(`todo/${GET_USER_TODO_LIST}`);
+    }
   },
 
   methods: {
@@ -163,7 +166,7 @@ export default {
      * вылогинивание текущего юзера
      */
     async logOut() {
-      await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER_ID}`, 0);
+      await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, 0);
       this.$router.push('/');
     },
   }

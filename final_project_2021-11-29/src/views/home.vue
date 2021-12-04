@@ -8,7 +8,7 @@
 <script>
 
 import {mapState} from 'vuex';
-import {PUSH_TEST_STORAGE, GET_ACTIVE_USER_ID} from "../types/actions";
+import {PUSH_TEST_STORAGE, GET_ACTIVE_USER} from "../types/actions";
 
 
 export default {
@@ -19,7 +19,8 @@ export default {
 
   computed: {
     ...mapState('todo/', {
-      ActiveUserId: state => state.ActiveUserId
+      ActiveUser: state => state.ActiveUser,
+      UsersList: state => state.UsersList
     })
   },
 
@@ -29,17 +30,13 @@ export default {
    * @returns {Promise<void>}
    */
   async beforeCreate() {
-    await this.$store.dispatch(`todo/${PUSH_TEST_STORAGE}`);
-    this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
+    //await this.$store.dispatch(`todo/${PUSH_TEST_STORAGE}`); // For testing only
+    await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
+    if (this.ActiveUser) {
+      this.$router.push('/todos');
+    }
   },
 
-  /**
-   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
-   * @returns {Promise<void>}
-   */
-  // beforeCreate() {
-  //   this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
-  // },
 }
 </script>
 

@@ -11,16 +11,23 @@ const api =  {
     },
 
     pullStorage() {
-        if (localStorage.getItem(storageName)) {
-            return JSON.parse(localStorage.getItem(storageName));
-        } else {
-            return {};
+        if (!localStorage.getItem(storageName)) {
+            const data = {
+                activeUserId: 0,
+                usersList: [],
+                usersData: []
+            }
+            localStorage.setItem(storageName, JSON.stringify(data));
         }
+        return JSON.parse(localStorage.getItem(storageName));
     },
 
     getActiveUser() {
         const data = this.pullStorage();
-        return data.activeUserId || 0;
+        if (!this.pullStorage().usersList) {
+            return null;
+        }
+        return data.usersList.find((item) => item.userId === data.activeUserId);
     },
 
     setActiveUser(activeUserId) {
@@ -31,11 +38,6 @@ const api =  {
 
     updateUsersList(userId, usersArray) {
         const data = this.pullStorage();
-
-        if (!data.usersList.length) {
-            data.usersList = [];
-            data.usersData = [];
-        }
 
         data.usersList = usersArray.map(item => item);
 

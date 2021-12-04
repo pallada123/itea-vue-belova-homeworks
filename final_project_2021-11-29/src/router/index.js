@@ -22,6 +22,11 @@ const routes = [
       }
     ]
   },
+  // {
+  //   path: '/registration',
+  //   name: 'Registration',
+  //   component:  () => import('../views/registration.vue')
+  // },
   {
     path: '/todos',
     name: 'Todos',

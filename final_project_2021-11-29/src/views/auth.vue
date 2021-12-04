@@ -5,13 +5,13 @@
 
       <div id="login-form">
         <div class="login-item">
-          <label>Login</label><input-text v-model="credentials.userLogin" />
+          <label>Login</label><input-text v-bind:input.sync="credentials.userLogin" />
         </div>
         <div class="login-item">
-          <label>Password</label><input-text v-model="credentials.userPassword" />
+          <label>Password</label><input-text v-bind:input.sync="credentials.userPassword" />
         </div>
         <div class="task-btns">
-          <action-button @btn-click="$emit('check-user', credentials)">Log In</action-button>
+          <action-button @btn-click="checkUser">Log In</action-button>
         </div>
         <p class="error" v-show="!existing">Incorrect Login or Password. Check spelling or click Sign Up button for creating a new user.</p>
       </div>
@@ -23,11 +23,10 @@
 <script>
 
 import {mapState} from 'vuex';
-import {GET_ACTIVE_USER_ID} from "../types/actions";
+import {CHANGE_ACTIVE_USER, GET_ACTIVE_USER, GET_USERS_LIST} from "../types/actions";
 import InputText from "@/components/InputText";
 import ActionButton from "@/components/ActionButton";
 import Popup from "@/components/Popup";
-import Storage from "../../../hw3_2021-11-12_todo-list/to-do/src/data";
 
 export default {
   name: "Auth",
@@ -38,13 +37,15 @@ export default {
       credentials: {
         userLogin: '',
         userPassword: ''
-      }
+      },
+      existing: true
     }
   },
 
   computed: {
     ...mapState('todo/', {
-      ActiveUserId: state => state.ActiveUserId
+      ActiveUser: state => state.ActiveUser,
+      UsersList: state => state.UsersList
     })
   },
 
@@ -52,36 +53,48 @@ export default {
    * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
    * @returns {Promise<void>}
    */
-  beforeCreate() {
-    this.$store.dispatch(`todo/${GET_ACTIVE_USER_ID}`);
+  async beforeCreate() {
+    await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
+    this.$store.dispatch(`todo/${GET_USERS_LIST}`);
   },
 
   methods: {
     closePopup() {
       this.$router.push('/');
-    }
-  },
+    },
 
-  /**
-   * при попытке залогиниться - проверка, существует ли юзер в LS.
-   * если да - логин, если нет - показ ошибки "такого юзера нет"
-   * @param creds - введенные в форму логина логин и пароль
-   */
-  checkUser(creds) {
+    /**
+     * при попытке залогиниться - проверка, существует ли юзер в LS.
+     * если да - логин, если нет - показ ошибки "такого юзера нет"
+     * @param creds - введенные в форму логина логин и пароль
+     */
+    checkUser() {
 
-    this.clearErrors();
+      this.existing = true;
 
-    let user = Storage.pullUsers().find(item => item.userLogin === creds.userLogin && item.userPassword === creds.userPassword);
+      if (!(this.UsersList && this.UsersList.length)) {
+        this.existing = false;
+        return;
+      }
 
-    if (user) {
-      this.user = user;
-    }
+      let user = this.UsersList.find(item => item.userLogin === this.credentials.userLogin && item.userPassword === this.credentials.userPassword);
 
-    else {
-      this.userExists = false;
-    }
+      if (!user) {
+        this.existing = false;
+      }
 
-  },
+      else {
+
+        this.existing = true;
+
+        this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, user);
+
+        this.$router.push('/todos');
+
+      }
+
+    },
+  }
 }
 </script>
 
