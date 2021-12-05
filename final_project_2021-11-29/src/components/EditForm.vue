@@ -2,21 +2,21 @@
 
   <div class="edit-form">
     <div class="edit-item">
-      <label>Task name</label><input-text v-bind:input.sync="editingTask.taskName" />
+      <label>Task name *</label><input-text :class="requiredError ? 'input-error' : ''" v-bind:input.sync="editingTask.taskName" />
+      <error-msg v-show="requiredError">{{ errorMsg }}</error-msg>
     </div>
     <div class="edit-item">
       <label>Task Description</label><input-text v-bind:input.sync="editingTask.taskDescription" />
     </div>
     <div class="edit-item">
-      <label>Task Image URL (.png or .jpg only)</label><input-text v-bind:input.sync="editingTask.taskImgUrl" />
+      <label>Task Image URL (.png or .jpg only)</label><input-text :class="imgError ? 'input-error' : ''" v-bind:input.sync="editingTask.taskImgUrl" />
+      <error-msg v-show="imgError">{{ errorImgMsg }}</error-msg>
     </div>
     <div class="edit-btns">
       <action-button @btn-click="saveTask">Save</action-button>
       <action-button @btn-click="cancelEditing">Cancel</action-button>
     </div>
 
-    <p class="error" v-show="showError">{{ errorMsg }}</p>
-    <p class="error" v-show="imgError">{{ errorImgMsg }}</p>
 
 
   </div>
@@ -24,11 +24,13 @@
 </template>
 
 <script>
-import InputText from "@/components/InputText";
-import ActionButton from "@/components/ActionButton";
+import InputText from "./InputText";
+import ActionButton from "./ActionButton";
+import ErrorMsg from "./ErrorMsg";
+
 export default {
   name: "EditForm",
-  components: {ActionButton, InputText},
+  components: {ErrorMsg, ActionButton, InputText},
 
   props: {
     task: {
@@ -39,8 +41,8 @@ export default {
   data() {
     return {
       editingTask: Object.assign({}, this.task),
-      showError: false,
-      errorMsg: 'Please fill in at least one field',
+      requiredError: false,
+      errorMsg: 'This field is required.',
       imgError: false,
       errorImgMsg: 'Incorrect image file extension.'
     }
@@ -62,23 +64,17 @@ export default {
      * если хотя бы одно поле непустое, передаёт родительскому компоненту событие сохранения и объект изменённой таски
      */
     saveTask() {
+      this.imgError = false;
 
-      if (this.editingTask.taskName === '' && this.editingTask.taskDescription === '' && this.editingTask.taskImgUrl === '') {
-        this.showError = true;
+      this.requiredError = !this.editingTask.taskName;
+
+      if(this.editingTask.taskImgUrl && !this.checkImg(this.editingTask.taskImgUrl)) {
+        this.imgError = true;
+      }
+
+      if (this.imgError || this.requiredError) {
         return;
       }
-
-      if (this.editingTask.taskImgUrl !== '') {
-
-        if(!this.checkImg(this.editingTask.taskImgUrl)) {
-          this.imgError = true;
-          return;
-        }
-
-      }
-
-      this.imgError = false;
-      this.showError = false;
 
       this.$emit('save-task', this.editingTask);
     },
@@ -117,6 +113,8 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -132,5 +130,4 @@ export default {
 }
 
 .edit-btns {text-align: right;}
-.edit-form .error {padding: 0; margin: 10px 0; color: brown; text-align: center;}
 </style>

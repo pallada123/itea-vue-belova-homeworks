@@ -5,7 +5,7 @@
 
       <div id="login-form">
         <div class="login-item">
-          <label>Login</label><input-text v-bind:input.sync="credentials.userLogin" />
+          <label>Nickname or email</label><input-text v-bind:input.sync="credentials.userNickname" />
         </div>
         <div class="login-item">
           <label>Password</label><input-text :type="'password'" v-bind:input.sync="credentials.userPassword" />
@@ -13,7 +13,7 @@
         <div class="task-btns">
           <action-button @btn-click="checkUser">Log In</action-button>
         </div>
-        <p class="error" v-show="!existing">Incorrect Login or Password. Check spelling or click Sign Up button for creating a new user.</p>
+        <error-msg v-show="!existing">Incorrect nickname, email or password. Check spelling or click Sign Up button for creating a new user.</error-msg>
       </div>
 
     </popup>
@@ -27,15 +27,16 @@ import {CHANGE_ACTIVE_USER, GET_ACTIVE_USER, GET_USERS_LIST} from "../types/acti
 import InputText from "@/components/InputText";
 import ActionButton from "@/components/ActionButton";
 import Popup from "@/components/Popup";
+import ErrorMsg from "../components/ErrorMsg";
 
 export default {
   name: "Auth",
-  components: {ActionButton, InputText, Popup},
+  components: {ErrorMsg, ActionButton, InputText, Popup},
 
   data () {
     return {
       credentials: {
-        userLogin: '',
+        userNickname: '',
         userPassword: ''
       },
       existing: true
@@ -77,7 +78,9 @@ export default {
         return;
       }
 
-      let user = this.UsersList.find(item => item.userLogin === this.credentials.userLogin && item.userPassword === this.credentials.userPassword);
+      let user = this.UsersList.find(item =>
+          (this.credentials.userNickname === item.userNickname || this.credentials.userNickname === item.userEmail) &&
+          item.userPassword === this.credentials.userPassword);
 
       if (!user) {
         this.existing = false;

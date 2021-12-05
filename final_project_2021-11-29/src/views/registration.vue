@@ -5,15 +5,34 @@
 
       <div id="login-form">
         <div class="login-item">
-          <label>Login</label><input-text v-bind:input.sync="credentials.userLogin" />
+          <label>Name *</label><input-text :class="(validation.userNameReg || validation.userNameLength) ? 'input-error' : ''" v-bind:input.sync="credentials.userName" />
+          <error-msg v-show="validation.userNameReg">{{ errorMsg.req }}</error-msg>
+          <error-msg v-show="validation.userNameLength">{{ errorMsg.length }}</error-msg>
         </div>
         <div class="login-item">
-          <label>Password</label><input-text v-bind:input.sync="credentials.userPassword" />
+          <label>Nickname *</label><input-text :class="(validation.userNicknameReg || validation.userNicknameLength || validation.userNicknameExists) ? 'input-error' : ''" v-bind:input.sync="credentials.userNickname" />
+          <error-msg v-show="validation.userNicknameReg">{{ errorMsg.req }}</error-msg>
+          <error-msg v-show="validation.userNicknameLength">{{ errorMsg.length }}</error-msg>
+          <error-msg v-show="validation.userNicknameExists">{{ errorMsg.nicknameExists }}</error-msg>
+        </div>
+        <div class="login-item">
+          <label>Email</label><input-text :class="(validation.userEmailFormat || validation.userEmailExists) ? 'input-error' : ''" v-bind:input.sync="credentials.userEmail" />
+          <error-msg v-show="validation.userEmailFormat">{{ errorMsg.emailFormat }}</error-msg>
+          <error-msg v-show="validation.userEmailExists">{{ errorMsg.emailExists }}</error-msg>
+        </div>
+        <div class="login-item">
+          <label>Password *</label><input-text :class="(validation.userPasswordReg || validation.userPasswordFormat) ? 'input-error' : ''" :type="'password'" v-bind:input.sync="credentials.userPassword" />
+          <error-msg v-show="validation.userPasswordReg">{{ errorMsg.req }}</error-msg>
+          <error-msg v-show="validation.userPasswordFormat">{{ errorMsg.passwordFormat }}</error-msg>
+        </div>
+        <div class="login-item">
+          <label>Repeat password *</label><input-text :class="(validation.userPasswordRepReg || validation.userPasswordRepFormat) ? 'input-error' : ''" :type="'password'" v-bind:input.sync="credentials.userPasswordRep" />
+          <error-msg v-show="validation.userPasswordRepReg">{{ errorMsg.req }}</error-msg>
+          <error-msg v-show="validation.userPasswordRepFormat">{{ errorMsg.passwordRepFormat }}</error-msg>
         </div>
         <div class="task-btns">
           <action-button @btn-click="addUser">Sign Up</action-button>
         </div>
-        <p class="error" v-show="!correctCreds">A user with this username and password already exists.</p>
       </div>
     </popup>
   </div>
@@ -26,18 +45,43 @@ import {GET_ACTIVE_USER, GET_USERS_LIST, UPDATE_USERS_LIST} from "../types/actio
 import InputText from "@/components/InputText";
 import ActionButton from "@/components/ActionButton";
 import Popup from "@/components/Popup";
+import ErrorMsg from "../components/ErrorMsg";
 
 export default {
   name: "Registration",
-  components: {ActionButton, InputText, Popup},
+  components: {ErrorMsg, ActionButton, InputText, Popup},
 
   data () {
     return {
       credentials: {
-        userLogin: '',
-        userPassword: ''
+        userName: '',
+        userNickname: '',
+        userEmail: '',
+        userPassword: ``,
+        userPasswordRep: ``
       },
-      correctCreds: true
+      validation: {
+        userNameReg: false,
+        userNameLength: false,
+        userNicknameReg: false,
+        userNicknameLength: false,
+        userNicknameExists: false,
+        userEmailFormat: false,
+        userEmailExists: false,
+        userPasswordReg: false,
+        userPasswordFormat: false,
+        userPasswordRepReg: false,
+        userPasswordRepFormat: false,
+      },
+      errorMsg: {
+        req: 'This field is required.',
+        emailFormat: 'Please use the correct email format, e.g. someemail@domain.com.',
+        passwordFormat: `The password must be length between 5 and 50 characters and can contain Latin letters, numbers and the following symbols: - _ [  ] ( ) { } < > # & / @ $ % ^ . , : ; ? !.`,
+        passwordRepFormat: 'The entered passwords don\'t match.',
+        nicknameExists: 'A user with this nickname already exists.',
+        emailExists: 'A user with this email already exists.',
+        length: 'The length must be between 3 and 50 characters'
+      }
     }
   },
 
@@ -60,36 +104,86 @@ export default {
       this.$router.push('/');
     },
 
-    /**
-     * сохранение нового юзера в LS.
-     * при сохранении - проверка, нет ли уже юзера с такими кредами.
-     * если нет - сохранние в LS, если да - показ ошибки "такой юзер уже существует"
-     * @param creds - введенные в форму логина логин и пароль
-     */
+
     addUser() {
 
-      this.correctCreds = true;
+      this.validation.userNameLength = false; // +
+      this.validation.userNicknameLength = false; // +
+      this.validation.userNicknameExists = false; // +
+      this.validation.userEmailFormat = false; // +
+      this.validation.userEmailExists = false; // +
+      this.validation.userPasswordFormat = false;
+      this.validation.userPasswordRepFormat = false; // +
 
-      let user = this.UsersList.find(item => item.userLogin === this.credentials.userLogin && item.userPassword === this.credentials.userPassword);
+      this.validation.userNameReg = !this.credentials.userName;
+      this.validation.userNicknameReg = !this.credentials.userNickname;
+      this.validation.userPasswordReg = !this.credentials.userPassword;
+      this.validation.userPasswordRepReg = !this.credentials.userPasswordRep;
 
-      if (!user) {
-        user = {
-          userId: this.getNewUserId(),
-          userLogin: this.credentials.userLogin,
-          userPassword: this.credentials.userPassword
-        };
+      if (this.credentials.userNickname &&
+          this.UsersList.find(item => item.userNickname === this.credentials.userNickname)) {
+        this.validation.userNicknameExists = true;
+      }
 
-        this.UsersList.push(user);
+      if (this.credentials.userEmail &&
+          this.UsersList.find(item => item.userEmail === this.credentials.userEmail)) {
+        this.validation.userEmailExists = true;
+      }
 
-        this.$store.dispatch(`todo/${UPDATE_USERS_LIST}`, {user: user, userList: this.UsersList});
+      if (this.credentials.userNickname &&
+          !this.validation.userNicknameExists &&
+          this.credentials.userNickname.length < 3 || this.credentials.userNickname.length > 50) {
+        this.validation.userNicknameLength = true;
+      }
 
-        this.$router.push('/todos');
+      if (this.credentials.userName &&
+          this.credentials.userName.length < 3 || this.credentials.userName.length > 50) {
+        this.validation.userNameLength = true;
+      }
+
+      if (!this.validation.userEmailExists &&
+          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.credentials.userEmail)) {
+        this.validation.userEmailFormat = true;
+      }
+
+      if (this.credentials.userPassword) {
+
+        if (this.credentials.userPassword.length < 5 || this.credentials.userPassword.length > 50) {
+          this.validation.userPasswordFormat = true;
+        }
+
+        if (!/[a-zA-Z0-9\-_\[\](){}<>#&/@$%^.,:;?!]*/.test(this.credentials.userPassword)) {
+          this.validation.userPasswordFormat = true;
+        }
 
       }
 
-      else {
-        this.correctCreds = false;
+      if (this.credentials.userPassword &&
+          this.credentials.userPasswordRep &&
+          !this.validation.userPasswordFormat &&
+          this.credentials.userPassword !== this.credentials.userPasswordRep) {
+        this.validation.userPasswordRepFormat = true;
       }
+
+      for (let key in this.validation) {
+        if (this.validation[key]) {
+          return;
+        }
+      }
+
+      let user = {
+        userId: this.getNewUserId(),
+        userName: this.credentials.userName,
+        userNickname: this.credentials.userNickname,
+        userEmail: this.credentials.userEmail,
+        userPassword: this.credentials.userPassword
+      };
+
+      this.UsersList.push(user);
+
+      this.$store.dispatch(`todo/${UPDATE_USERS_LIST}`, {user: user, userList: this.UsersList});
+
+      this.$router.push('/todos');
     },
 
     /**

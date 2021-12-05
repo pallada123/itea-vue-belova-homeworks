@@ -5,7 +5,7 @@ const storageName = 'toDoList';
 const api =  {
 
     pushTestStorage() {
-        if (!this.pullStorage().usersList) {
+        if (!this.pullStorage().usersList.length) {
             localStorage.setItem(storageName, JSON.stringify(testDataBase));
         }
     },

@@ -1,5 +1,5 @@
 <template>
-  <input :type="type ? type : 'text'" v-model="inputValue" />
+  <input :type="type ? type : 'text'" v-model.trim="inputValue" />
 </template>
 
 <script>
@@ -41,5 +41,11 @@ export default {
 
   .task-item input[type="text"] {
     background-color: var(--input-task-bgcolor);
+  }
+
+  input[type="text"].input-error,
+  input[type="password"].input-error{
+
+    border-color: var(--input-border-error);
   }
 </style>

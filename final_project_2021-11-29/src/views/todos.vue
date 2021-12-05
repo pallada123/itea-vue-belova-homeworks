@@ -2,7 +2,7 @@
   <div>
     <action-button @btn-click="logOut">Log Out</action-button>
 
-      <h1 v-if="ActiveUser">{{ActiveUser.userLogin}}'s To Do List</h1>
+      <h1 v-if="ActiveUser">{{ActiveUser.userNickname}}'s To Do List</h1>
 
     <div v-if="isAdding">
 

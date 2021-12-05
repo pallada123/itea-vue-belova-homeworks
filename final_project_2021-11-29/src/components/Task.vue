@@ -28,6 +28,7 @@
         <action-button @btn-click="setEditing">Edit</action-button>
         <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
       </div>
+
       <div class="task-create-date">Created: {{ task.taskCreationDate }}</div>
       <div class="task-edited" v-if="task.isEdited">Task was edited</div>
 

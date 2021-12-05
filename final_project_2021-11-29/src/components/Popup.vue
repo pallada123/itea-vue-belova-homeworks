@@ -4,7 +4,7 @@
     <div id="popup-overlay" @click="$emit('close-popup')"></div>
     <div id="popup-item">
 
-      <div id="idPopupContent">
+      <div class="popup-body">
         <slot></slot>
       </div>
 
@@ -39,7 +39,6 @@ export default {
   -webkit-box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   width: 400px;
-  min-height: 400px;
   max-width: 90vw;
   max-height: 90vh;
   position: fixed;
@@ -81,9 +80,24 @@ button.popup-close:hover {
   transform: rotate(-180deg);
 }
 
-#popup-content {
-  min-height: 400px;
-  padding: 50px 20px 20px 20px;
+.popup-body {
+  padding: 50px 20px 30px 20px;
   text-align: left;
 }
+.popup-body h1,
+.popup-body h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+.login-item {margin-bottom: 15px;}
+.login-item label,
+.login-item input[type="text"],
+.login-item input[type="password"] {
+  display: block;
+  margin-bottom: 5px;
+  width: 100%;
+}
+.popup-body .task-btns {text-align: center; padding: 20px 0;}
 </style>

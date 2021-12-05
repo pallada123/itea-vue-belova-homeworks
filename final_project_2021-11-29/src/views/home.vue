@@ -30,7 +30,7 @@ export default {
    * @returns {Promise<void>}
    */
   async beforeCreate() {
-    //await this.$store.dispatch(`todo/${PUSH_TEST_STORAGE}`); // For testing only
+    await this.$store.dispatch(`todo/${PUSH_TEST_STORAGE}`); // For testing only
     await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
     if (this.ActiveUser) {
       this.$router.push('/todos');
@@ -41,5 +41,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

@@ -11,7 +11,9 @@
 
   --font-family: Arial, Helvetica, sans-serif;
   --text-size: 16px;
+  --text-size-small: 14px;
   --text-color: #000;
+  --text-color-error: #af0f23;
 
   --btn-bgcolor: #85c6cc;
   --btn-shadow: #689ea3;
@@ -27,9 +29,10 @@
   --btn-switch-layout-hover-bgcolor: #fff;
 
   --input-border: #eaeaea;
-  --input-color: #000;
+  --input-color: #808080;
   --input-bgcolor: #fff;
   --input-task-bgcolor: #f5f5f5;
+  --input-border-error: #af0f23;
 
   --popup-overlay-bgcolor: #000;
   --popup-bgcolor: #fff;

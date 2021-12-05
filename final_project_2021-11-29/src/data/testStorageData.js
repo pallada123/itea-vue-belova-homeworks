@@ -4,17 +4,23 @@ export default {
     usersList: [
         {
             userId: 1,
-            userLogin: 'Masha',
+            userName: 'Remus Lupin',
+            userNickname: 'Moony',
+            userEmail: 'lupin@hogwarts.co.uk',
             userPassword: '123'
         },
         {
             userId: 2,
-            userLogin: 'Oleg',
+            userName: 'Sirius Black',
+            userNickname: 'Padfoot',
+            userEmail: 'black@hogwarts.co.uk',
             userPassword: '456'
         },
         {
             userId: 3,
-            userLogin: 'Igor',
+            userName: 'James Potter',
+            userNickname: 'Prongs',
+            userEmail: 'potter@hogwarts.co.uk',
             userPassword: '789'
         }
     ],
