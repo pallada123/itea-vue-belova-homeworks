@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import InputText from "./InputText";
-import ActionButton from "./ActionButton";
-import ErrorMsg from "./ErrorMsg";
+import InputText from "../common/InputText";
+import ActionButton from "../common/ActionButton";
+import ErrorMsg from "../login/ErrorMsg";
 
 export default {
   name: "EditForm",

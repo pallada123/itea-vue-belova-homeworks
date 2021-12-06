@@ -1,6 +1,6 @@
 <template>
 
-  <div class="task-container" :class="task.isDone ? 'task-item-done' : ''">
+  <div class="task-container" :class="{'task-item-done': task.isDone, 'task-status-red': task.taskStatus === 'red', 'task-status-yellow': task.taskStatus === 'yellow', 'task-status-green': task.taskStatus === 'green'}">
 
     <div class="task-item" v-if="isEditing" :class="task.isDone ? 'task-item-done' : ''">
       <edit-form
@@ -21,12 +21,23 @@
 
       </div>
       <div class="task-btns">
-        <action-button
-          @btn-click="toggleTaskDone"
-          :btn-caption="btnCaption"
-        >{{ btnCaption }}</action-button>
-        <action-button @btn-click="setEditing">Edit</action-button>
-        <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
+        <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ btnActionsCaption }}</action-button>
+        <div v-show="showActions">
+          <action-button
+            @btn-click="toggleTaskDone"
+            :btn-caption="btnDoneCaption"
+          >{{ btnDoneCaption }}</action-button>
+          <action-button @btn-click="setEditing">Edit</action-button>
+          <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
+          <br>
+          <label>Change status</label>
+          <select v-model="task.taskStatus" @change="changeStatus">
+            <option value="">No status</option>
+            <option value="red">Red</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+          </select>
+        </div>
       </div>
 
       <div class="task-create-date">Created: {{ task.taskCreationDate }}</div>
@@ -38,9 +49,9 @@
 
 <script>
 
-import ActionButton from '@/components/ActionButton';
-import InputText from '@/components/InputText';
-import EditForm from "@/components/EditForm";
+import ActionButton from '@/components/common/ActionButton';
+import InputText from '@/components/common/InputText';
+import EditForm from "@/components/task/EditForm";
 
 export default {
   name: "Task",
@@ -53,7 +64,8 @@ export default {
 
   data() {
     return {
-      isEditing: false
+      isEditing: false,
+      showActions: false
     }
   },
 
@@ -62,8 +74,11 @@ export default {
     /**
      * @returns {string} - текст кнопки переключения статуса (выполнено или нет) в зависимости от статуса
      */
-      btnCaption() {
+      btnDoneCaption() {
         return 'Mark ' + (this.task.isDone ? 'Undone' : 'Done');
+      },
+      btnActionsCaption() {
+        return (this.showActions ? 'Hide' : 'Show') + ' actions';
       }
 
   },
@@ -81,6 +96,10 @@ export default {
      */
     toggleTaskDone() {
       this.task.isDone = !this.task.isDone;
+      this.$emit('task-change', this.task);
+    },
+
+    changeStatus() {
       this.$emit('task-change', this.task);
     },
 
@@ -118,9 +137,18 @@ export default {
 .task-container {
   background-color: var(--task-bgcolor);
   border: 1px solid var(--task-border);
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0 0 20px 0;
   width: auto;
+}
+.task-container.task-status-red {
+  border-color: var(--task-border-red);
+}
+.task-container.task-status-yellow {
+  border-color: var(--task-border-yellow);
+}
+.task-container.task-status-green {
+  border-color: var(--task-border-green);
 }
 .task-item {
   display: -webkit-box;
@@ -145,6 +173,26 @@ export default {
 .task-txt p {padding-bottom: 18px;}
 .task-head {font-weight: bold;}
 .task-btns {width: 150px; margin-left: 20px; text-align: center;}
+
+.task-btns label {
+  display: block;
+  margin: 15px 0 5px 0;
+}
+.task-btns select {
+
+  height: 32px;
+  line-height: 32px;
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  background-clip: padding-box;
+  background-color: var(--input-bgcolor);
+  color: var(--input-color);
+  font-family: var(--font-family);
+  font-size: var(--text-size);
+  padding: 0 15px;
+  display: inline-block;
+  min-width: 1px;
+}
 
 .task-item-done {
   background-color: var(--task-done-bgcolor);

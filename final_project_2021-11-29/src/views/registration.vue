@@ -42,10 +42,10 @@
 
 import {mapState} from 'vuex';
 import {GET_ACTIVE_USER, GET_USERS_LIST, UPDATE_USERS_LIST} from "../types/actions";
-import InputText from "@/components/InputText";
-import ActionButton from "@/components/ActionButton";
-import Popup from "@/components/Popup";
-import ErrorMsg from "../components/ErrorMsg";
+import InputText from "../components/common/InputText";
+import ActionButton from "../components/common/ActionButton";
+import Popup from "../components/common/Popup";
+import ErrorMsg from "../components/login/ErrorMsg";
 
 export default {
   name: "Registration",
@@ -107,13 +107,13 @@ export default {
 
     addUser() {
 
-      this.validation.userNameLength = false; // +
-      this.validation.userNicknameLength = false; // +
-      this.validation.userNicknameExists = false; // +
-      this.validation.userEmailFormat = false; // +
-      this.validation.userEmailExists = false; // +
+      this.validation.userNameLength = false;
+      this.validation.userNicknameLength = false;
+      this.validation.userNicknameExists = false;
+      this.validation.userEmailFormat = false;
+      this.validation.userEmailExists = false;
       this.validation.userPasswordFormat = false;
-      this.validation.userPasswordRepFormat = false; // +
+      this.validation.userPasswordRepFormat = false;
 
       this.validation.userNameReg = !this.credentials.userName;
       this.validation.userNicknameReg = !this.credentials.userNickname;
@@ -142,7 +142,7 @@ export default {
       }
 
       if (!this.validation.userEmailExists &&
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.credentials.userEmail)) {
+          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.[a-z]{2,})$/.test(this.credentials.userEmail)) {
         this.validation.userEmailFormat = true;
       }
 

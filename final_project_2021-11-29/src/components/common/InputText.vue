@@ -27,7 +27,7 @@ export default {
     height: 32px;
     line-height: 32px;
     border: 1px solid var(--input-border);
-    border-radius: 5px;
+    border-radius: 10px;
     background-clip: padding-box;
     background-color: var(--input-bgcolor);
     color: var(--input-color);

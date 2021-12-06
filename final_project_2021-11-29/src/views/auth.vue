@@ -24,10 +24,10 @@
 
 import {mapState} from 'vuex';
 import {CHANGE_ACTIVE_USER, GET_ACTIVE_USER, GET_USERS_LIST} from "../types/actions";
-import InputText from "@/components/InputText";
-import ActionButton from "@/components/ActionButton";
-import Popup from "@/components/Popup";
-import ErrorMsg from "../components/ErrorMsg";
+import InputText from "../components/common/InputText";
+import ActionButton from "../components/common/ActionButton";
+import Popup from "../components/common/Popup";
+import ErrorMsg from "../components/login/ErrorMsg";
 
 export default {
   name: "Auth",

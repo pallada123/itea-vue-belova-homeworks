@@ -13,9 +13,6 @@ import {PUSH_TEST_STORAGE, GET_ACTIVE_USER} from "../types/actions";
 
 export default {
   name: 'Home',
-  components: {
-
-  },
 
   computed: {
     ...mapState('todo/', {
