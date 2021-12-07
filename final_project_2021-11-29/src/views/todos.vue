@@ -20,9 +20,7 @@
       <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
     </div>
 
-    <task-wrap
-        :to-do-list="UserToDoListUncompleted"
-    />
+    <task-wrap />
   </div>
 </template>
 
@@ -67,9 +65,6 @@ export default {
     ...mapState('todo/', {
       UserToDoList: state => state.UserToDoList,
       ActiveUser: state => state.ActiveUser,
-      UserToDoListUncompleted: state => {
-        return state.UserToDoList.filter(task => !task.isDone)
-      }
     })
   },
 

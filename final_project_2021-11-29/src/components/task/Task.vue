@@ -194,15 +194,15 @@ export default {
   min-width: 1px;
 }
 
-.task-item-done {
-  background-color: var(--task-done-bgcolor);
-}
-.task-item-done .task-img,
-.task-item-done .task-txt,
-.task-item-done .task-create-date,
-.task-item-done .task-edited {
-  opacity: .5;
-}
+/*.task-item-done {*/
+/*  background-color: var(--task-done-bgcolor);*/
+/*}*/
+/*.task-item-done .task-img,*/
+/*.task-item-done .task-txt,*/
+/*.task-item-done .task-create-date,*/
+/*.task-item-done .task-edited {*/
+/*  opacity: .5;*/
+/*}*/
 
 .task-create-date,
 .task-edited {

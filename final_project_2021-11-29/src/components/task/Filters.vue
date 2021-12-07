@@ -3,23 +3,23 @@
   <action-button
       :class="{'btn-visual': true, 'btn-red': true, 'btn-active': filters.stateBtnRed}"
       v-if="itemsExisting.itemsRed"
-      @btn-click="toggleBtnRed">Red</action-button>
+      @btn-click="filters.stateBtnRed = !filters.stateBtnRed;">Red</action-button>
   <action-button
       :class="{'btn-visual': true, 'btn-yellow': true, 'btn-active': filters.stateBtnYellow}"
       v-if="itemsExisting.itemsYellow"
-      @btn-click="toggleBtnYellow">Yellow</action-button>
+      @btn-click="filters.stateBtnYellow = !filters.stateBtnYellow;">Yellow</action-button>
   <action-button
       :class="{'btn-visual': true, 'btn-green': true, 'btn-active': filters.stateBtnGreen}"
       v-if="itemsExisting.itemsGreen"
-      @btn-click="toggleBtnGreen">Green</action-button>
+      @btn-click="filters.stateBtnGreen = !filters.stateBtnGreen;">Green</action-button>
   <action-button
       :class="{'btn-visual': true, 'btn-blank': true, 'btn-active': filters.stateBtnBlank}"
       v-if="itemsExisting.itemsBlank"
-      @btn-click="toggleBtnBlank">Without status</action-button><br>
-  <input-text @update:input="setSearchText" /><br>
+      @btn-click="filters.stateBtnBlank = !filters.stateBtnBlank;">Without status</action-button><br>
+  <input-text v-bind:input.sync="filters.searchText" /><br>
   <action-button
       :class="'btn-visual'"
-      @btn-click="clearFilters">Clear filters</action-button>
+      @btn-click="$emit('clear-filters')">Clear filters</action-button>
 </div>
 </template>
 
@@ -37,18 +37,10 @@ export default {
     ToDoList: {
       type: Array,
       required: true
-    }
-  },
-
-  data() {
-    return {
-      filters: {
-        stateBtnRed: true,
-        stateBtnYellow: true,
-        stateBtnGreen: true,
-        stateBtnBlank: true,
-        searchText: ''
-      },
+    },
+    filters: {
+      type: Object,
+      required: true
     }
   },
 
@@ -61,47 +53,7 @@ export default {
         itemsBlank: this.ToDoList.some(item => item.taskStatus === '')
       }
     }
-  },
-
-  methods: {
-
-
-    toggleBtnRed() {
-      this.filters.stateBtnRed = !this.filters.stateBtnRed;
-      this.$emit('set-filters', this.filters);
-    },
-
-
-    toggleBtnYellow() {
-      this.filters.stateBtnYellow = !this.filters.stateBtnYellow;
-      this.$emit('set-filters', this.filters);
-    },
-
-    toggleBtnGreen() {
-      this.filters.stateBtnGreen = !this.filters.stateBtnGreen;
-      this.$emit('set-filters', this.filters);
-    },
-
-    toggleBtnBlank() {
-      this.filters.stateBtnBlank = !this.filters.stateBtnBlank;
-      this.$emit('set-filters', this.filters);
-    },
-
-    setSearchText(val) {
-      this.filters.searchText = val;
-      this.$emit('set-filters', this.filters);
-    },
-
-    clearFilters() {
-      this.filters.stateBtnRed = true;
-      this.filters.stateBtnYellow = true;
-      this.filters.stateBtnGreen = true;
-      this.filters.stateBtnBlank = true;
-      this.filters.searchText = '';
-      this.$emit('set-filters', this.filters);
-    }
-
-  },
+  }
 }
 </script>
 
@@ -112,5 +64,7 @@ export default {
   display: inline;
 }
 
-#filters input[type="text"] {margin-bottom: 10px;}
+#filters input[type="text"]{
+  margin-bottom: 10px;
+}
 </style>

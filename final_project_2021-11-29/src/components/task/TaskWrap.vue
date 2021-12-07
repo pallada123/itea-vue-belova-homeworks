@@ -1,19 +1,19 @@
 <template>
   <div>
-
     <filters
-      :to-do-list="ToDoList"
-      @set-filters="setFilters"
+      :to-do-list="setPagesFullList()"
+      :filters="filters"
+      @clear-filters="clearFilters"
     />
 
     <div class="task-style-btn">
-      <action-button :class="'btn-visual'" @btn-click="taskStyle = !taskStyle">{{ btnCaption }}</action-button>
+      <action-button :class="'btn-visual'" @btn-click="taskStyle = !taskStyle">{{ 'Show ' + (taskStyle ? 'grid' : 'list') }}</action-button>
     </div>
 
-    <div id="task-wrap" v-if="filteredList.length" :class="taskStyle ? '' : 'task-wrap-grid'">
+    <div id="task-wrap" :class="taskStyle ? '' : 'task-wrap-grid'">
 
       <task
-          v-for="task in filteredList"
+          v-for="task in setPagesFilteredList()"
           :key="task.taskId"
           :task="task"
           @task-change="updateTask"
@@ -24,6 +24,15 @@
 </template>
 
 <script>
+
+const blankFilters = {
+  stateBtnRed: true,
+  stateBtnYellow: true,
+  stateBtnGreen: true,
+  stateBtnBlank: true,
+  searchText: ''
+}
+
 import Task from '@/components/task/Task';
 import Filters from '@/components/task/Filters';
 import ActionButton from "@/components/common/ActionButton";
@@ -32,7 +41,6 @@ import {UPDATE_TODO_LIST} from "../../types/actions";
 
 export default {
   name: "TaskWrap",
-  props: ['ToDoList'],
   components: {
     Task,
     ActionButton,
@@ -42,96 +50,63 @@ export default {
   computed: {
     ...mapState('todo/', {
       UserToDoList: state => state.UserToDoList
-    }),
-
-    // filteredList() {
-    //   return this.ToDoList.slice()
-    // },
-
-    /**
-     * @returns {string} - текст кнопки переключения статуса (выполнено или нет) в зависимости от статуса
-     */
-    btnCaption() {
-      return 'Show ' + (this.taskStyle ? 'grid' : 'list');
-    },
+    })
   },
 
   data() {
     return {
       taskStyle: true, // true - list, false - grid
-      filteredList: this.ToDoList[1],
+      filters: Object.assign({}, blankFilters)
     }
   },
 
   methods: {
 
-    /**
-     * сообщает родительскому компоненту о необходимости обновить юзера, потому что изменился его список тасок (одна таска изменилась)
-     * @param task
-     */
     updateTask(task) {
       let updatedTaskIndex = this.UserToDoList.findIndex(item => item.taskId === task.taskId);
       this.UserToDoList.splice(updatedTaskIndex, 1, task);
       this.$store.dispatch(`todo/${UPDATE_TODO_LIST}`, this.UserToDoList);
     },
 
-    /**
-     * сообщает родительскому компоненту о необходимости обновить юзера, потому что изменился его список тасок (одна таска удалилась)
-     * @param task
-     */
     deleteTask(task) {
       let deleteTaskIndex = this.UserToDoList.findIndex(item => item.taskId === task.taskId);
       this.UserToDoList.splice(deleteTaskIndex, 1);
       this.$store.dispatch(`todo/${UPDATE_TODO_LIST}`, this.UserToDoList);
     },
 
-    setFilters(filters) {
-      console.log(filters);
-      //this.filteredList = [1, 2, 3]
-      //     stateBtnRed: true,
-      //     stateBtnYellow: true,
-      //     stateBtnGreen: true,
-      //     stateBtnBlank: true,
-      //     searchText: ''
+    setPagesFullList() {
+      if (this.$route.path === '/todos') {
+        return this.UserToDoList.filter(task => !task.isDone);
+      }
 
-      // let guests = this.guests;
-      //
-      // switch (true) {
-      //   case filters.stateArrivedBtn && filters.stateNonArrivedBtn:
-      //     guests = this.guests;
-      //     break;
-      //   case !filters.stateArrivedBtn && !filters.stateNonArrivedBtn:
-      //     guests = [];
-      //     break;
-      //   case !filters.stateArrivedBtn && filters.stateNonArrivedBtn:
-      //     guests = this.guests.filter( (item) => !this.arrivedGuests.includes(item._id));
-      //     break;
-      //   case filters.stateArrivedBtn && !filters.stateNonArrivedBtn:
-      //     guests = this.guests.filter( (item) => this.arrivedGuests.includes(item._id));
-      //     break;
-      //   default:
-      //     guests = this.guests;
-      // }
-      //
-      // this.searchValue = filters.searchText;
-      //
-      // if (guests.length > 0 && filters.searchText) {
-      //
-      //
-      //   guests = guests.filter( (item) => {
-      //
-      //     let keys = Object.keys(item);
-      //
-      //     for (let key of keys) {
-      //       if (String(item[key]).toLowerCase().indexOf(filters.searchText.toLowerCase()) !== -1) {
-      //         return true;
-      //       }
-      //     }
-      //     return false;
-      //   });
-      // }
-      //
-      // this.shownGuests = guests;
+      if (this.$route.path === '/todos-completed') {
+        return this.UserToDoList.filter(task => task.isDone);
+      }
+    },
+
+    setPagesFilteredList() {
+
+      return this.setPagesFullList().filter(task => {
+
+        if (!this.filters.stateBtnRed && task.taskStatus === 'red') return false;
+        if (!this.filters.stateBtnYellow && task.taskStatus === 'yellow') return false;
+        if (!this.filters.stateBtnGreen && task.taskStatus === 'green') return false;
+        if (!this.filters.stateBtnBlank && task.taskStatus === '') return false;
+
+        if (this.filters.searchText) {
+          let {taskName, taskDescription} = task;
+
+          return taskName.toLowerCase().indexOf(this.filters.searchText.toLowerCase()) !== -1 ||
+              taskDescription.toLowerCase().indexOf(this.filters.searchText.toLowerCase()) !== -1;
+        }
+
+        return true;
+
+      });
+    },
+
+    clearFilters() {
+      this.filters = Object.assign({}, blankFilters);
     }
   },
 }
