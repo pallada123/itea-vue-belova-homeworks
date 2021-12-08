@@ -31,7 +31,7 @@ export default {
     background-clip: padding-box;
     background-color: var(--input-bgcolor);
     color: var(--input-color);
-    font-family: var(--font-family);
+    font-family: Arial, Helvetica, sans-serif;
     font-size: var(--text-size);
     padding: 0 15px;
     display: inline-block;

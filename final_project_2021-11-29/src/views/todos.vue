@@ -4,21 +4,28 @@
     <action-button @btn-click="logOut">Log Out</action-button>
 
     <h1 v-if="ActiveUser">{{ActiveUser.userNickname}}'s To Do List</h1>
+
     <div id="nav">
       <router-link to="/todos-completed">Completed tasks</router-link>
     </div>
 
-    <div v-if="isAdding">
+    <transition name="task" v-if="isAdding">
 
       <edit-form
           :task="blankTask"
           @cancel-editing="cancelAdding"
           @save-task="saveTask"
       />
-    </div>
-    <div class="add-task-btn" v-else>
-      <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
-    </div>
+
+    </transition>
+
+    <transition name="task" v-else>
+
+      <div class="add-task-btn">
+        <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
+      </div>
+
+    </transition>
 
     <task-wrap />
   </div>
@@ -59,6 +66,12 @@ export default {
     TaskWrap,
     ActionButton,
     EditForm
+  },
+
+  inject: ['setBodyClass'],
+
+  created() {
+    this.setBodyClass();
   },
 
   computed: {
@@ -141,9 +154,34 @@ export default {
 .add-task-btn {
   margin-bottom: 0;
   text-align: right;
+
+
+  transition: all .35s ease-in-out;
 }
 .task-style-btn {
   margin-bottom: 20px;
   text-align: right;
+}
+
+/*.edit-enter-active, .edit-leave-active {*/
+/*  transition: opacity 2s*/
+/*}*/
+/*.edit-enter, .edit-leave-to !* .fade-leave-active below version 2.1.8 *! {*/
+/*  opacity: 0*/
+/*}*/
+
+.task-enter {
+  transform: scale(0.5) translatey(-80px);
+  opacity:0;
+}
+
+.task-leave-to{
+  transform: translatey(30px);
+  opacity:0;
+}
+
+.task-leave-active {
+  position: absolute;
+  z-index:-1;
 }
 </style>

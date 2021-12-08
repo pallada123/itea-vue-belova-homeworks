@@ -12,13 +12,17 @@
 
     <div id="task-wrap" :class="taskStyle ? '' : 'task-wrap-grid'">
 
-      <task
-          v-for="task in setPagesFilteredList()"
-          :key="task.taskId"
-          :task="task"
-          @task-change="updateTask"
-          @task-delete="deleteTask"
-      />
+      <transition-group name="tasks">
+
+        <task
+            v-for="task in setPagesFilteredList()"
+            :key="task.taskId"
+            :task="task"
+            @task-change="updateTask"
+            @task-delete="deleteTask"
+        />
+
+      </transition-group>
     </div>
   </div>
 </template>
@@ -134,5 +138,20 @@ export default {
   justify-content: space-between;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+}
+
+.tasks-enter {
+  transform: scale(0.5) translatey(-80px);
+  opacity:0;
+}
+
+.tasks-leave-to{
+  transform: translatey(30px);
+  opacity:0;
+}
+
+.tasks-leave-active {
+  position: absolute;
+  z-index:-1;
 }
 </style>

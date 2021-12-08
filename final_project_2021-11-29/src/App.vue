@@ -1,59 +1,75 @@
 <template>
   <div id="app">
-    <router-view/>
+    <component :is="theme">
+      <div>
+      <action-button :class="'btn-visual'" @btn-click="theme === 'LightTheme' ? theme = 'DarkTheme' : theme = 'LightTheme'">{{ theme === 'LightTheme' ? 'Dark Theme' : 'Light Theme' }}</action-button>
+
+      <action-button :class="'btn-visual'" @btn-click="showHistory = !showHistory">{{ 'History' }}</action-button>
+
+      <transition name="fade">
+        <router-view />
+      </transition>
+
+
+      <transition name="history">
+        <popup @close-popup="hideHistory" v-if="showHistory">
+          <history />
+        </popup>
+      </transition>
+
+      </div>
+    </component>
   </div>
 </template>
+
+<script>
+import LightTheme from "./components/themes/LightTheme";
+import DarkTheme from "./components/themes/DarkTheme";
+import ActionButton from "./components/common/ActionButton";
+import Popup from "./components/common/Popup";
+import History from "./components/history/History";
+
+export default {
+
+  components: {
+    History,
+    Popup,
+    LightTheme,
+    DarkTheme,
+    ActionButton
+  },
+
+  data() {
+    return {
+      theme: 'LightTheme',
+      showHistory: false
+    }
+  },
+  methods: {
+    hideHistory() {
+      this.showHistory = false
+    }
+  },
+}
+</script>
 
 <style>
 
 * {
-  --body-bgcolor: #f5f5f5;
 
-  --font-family: Arial, Helvetica, sans-serif;
   --text-size: 16px;
-  --text-size-small: 14px;
-  --text-color: #000;
-  --text-color-error: #af0f23;
-
-  --link-color: #639599;
-
-  --btn-bgcolor: #85c6cc;
-  --btn-color: #fff;
-
-  --btn-visual-bgcolor: #fff;
-  --btn-visual-border: #85c6cc;
-  --btn-visual-color: #000;
-
-  --btn-hover-bgcolor: #47bfcb;
-
-  --input-border: #eaeaea;
-  --input-color: #808080;
-  --input-bgcolor: #fff;
-  --input-task-bgcolor: #f5f5f5;
-  --input-border-error: #af0f23;
-
-  --popup-overlay-bgcolor: #000;
-  --popup-bgcolor: #fff;
-
-  --task-border: #e5e5e5;
-  --task-bgcolor: #fff;
-  --task-done-bgcolor: #f5f5f5;
-  --task-border-red: red;
-  --task-border-yellow: #cccc00;
-  --task-border-green: green;
 }
 
 * {margin: 0; padding: 0;}
 
 html, body {
-  font-family: var(--font-family);
-  color: var(--text-color);
-  font-size: var(--text-size);
-  background-color: var(--body-bgcolor);
   font-style: normal;
   margin: 0;
   padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  --text-size: 16px;
 }
+
 html {font-smoothing: antialiased; font-weight: 400;}
 a img {border:none;}
 a,
@@ -130,6 +146,7 @@ h1 {
   transition: all 0.2s linear;
   border: none;
   position: relative;
+  font-size: var(--text-size-small);
 }
 .btn:hover{
   -webkit-transform:scale(1.1);
@@ -179,5 +196,23 @@ h1 {
 .btn.btn-blank:visited,
 .btn.btn-blank:focus {
   border-color: var(--task-border);
+}
+
+.fade-enter-active, .fade-live-active {
+  transition: opacity .4s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+
+
+.history-enter-active, .history-live-active {
+  transition: opacity .4s;
+}
+
+.history-enter, .history-leave-to {
+  opacity: 0;
 }
 </style>

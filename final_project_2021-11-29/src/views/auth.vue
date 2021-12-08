@@ -33,6 +33,8 @@ export default {
   name: "Auth",
   components: {ErrorMsg, ActionButton, InputText, Popup},
 
+  inject: ['setBodyClass'],
+
   data () {
     return {
       credentials: {
@@ -48,6 +50,10 @@ export default {
       ActiveUser: state => state.ActiveUser,
       UsersList: state => state.UsersList
     })
+  },
+
+  created() {
+    this.setBodyClass();
   },
 
   /**

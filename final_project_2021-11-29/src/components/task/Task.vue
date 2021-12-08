@@ -1,8 +1,8 @@
 <template>
 
-  <div class="task-container" :class="{'task-item-done': task.isDone, 'task-status-red': task.taskStatus === 'red', 'task-status-yellow': task.taskStatus === 'yellow', 'task-status-green': task.taskStatus === 'green'}">
+  <div class="task-container" :class="{'task-status-red': task.taskStatus === 'red', 'task-status-yellow': task.taskStatus === 'yellow', 'task-status-green': task.taskStatus === 'green'}">
 
-    <div class="task-item" v-if="isEditing" :class="task.isDone ? 'task-item-done' : ''">
+    <div class="task-item" v-if="isEditing">
       <edit-form
           :task="task"
           @cancel-editing="cancelEditing"
@@ -20,13 +20,13 @@
         <p class="task-body">{{ task.taskDescription }}</p>
 
       </div>
+
       <div class="task-btns">
-        <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ btnActionsCaption }}</action-button>
+
+        <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ (showActions ? 'Hide' : 'Show') + ' actions' }}</action-button>
+
         <div v-show="showActions">
-          <action-button
-            @btn-click="toggleTaskDone"
-            :btn-caption="btnDoneCaption"
-          >{{ btnDoneCaption }}</action-button>
+          <action-button @btn-click="toggleTaskDone">{{ 'Mark ' + (task.isDone ? 'Undone' : 'Done') }}</action-button>
           <action-button @btn-click="setEditing">Edit</action-button>
           <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
           <br>
@@ -38,12 +38,14 @@
             <option value="green">Green</option>
           </select>
         </div>
+
       </div>
 
       <div class="task-create-date">Created: {{ task.taskCreationDate }}</div>
       <div class="task-edited" v-if="task.isEdited">Task was edited</div>
 
     </div>
+
   </div>
 </template>
 
@@ -67,20 +69,6 @@ export default {
       isEditing: false,
       showActions: false
     }
-  },
-
-  computed: {
-
-    /**
-     * @returns {string} - текст кнопки переключения статуса (выполнено или нет) в зависимости от статуса
-     */
-      btnDoneCaption() {
-        return 'Mark ' + (this.task.isDone ? 'Undone' : 'Done');
-      },
-      btnActionsCaption() {
-        return (this.showActions ? 'Hide' : 'Show') + ' actions';
-      }
-
   },
 
   components: {
@@ -139,7 +127,11 @@ export default {
   border: 1px solid var(--task-border);
   border-radius: 10px;
   margin: 0 0 20px 0;
-  width: auto;
+  width: 100%;
+  position: relative;
+
+
+  transition: all .35s ease-in-out;
 }
 .task-container.task-status-red {
   border-color: var(--task-border-red);
@@ -160,6 +152,9 @@ export default {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding: 20px;
+  transition: all .35s ease-in-out;
+  width: 100%;
+  position: relative;
 }
 
 .task-img {width: 200px; margin-right: 20px;}
@@ -187,22 +182,12 @@ export default {
   background-clip: padding-box;
   background-color: var(--input-bgcolor);
   color: var(--input-color);
-  font-family: var(--font-family);
+  font-family: Arial, Helvetica, sans-serif;
   font-size: var(--text-size);
   padding: 0 15px;
   display: inline-block;
   min-width: 1px;
 }
-
-/*.task-item-done {*/
-/*  background-color: var(--task-done-bgcolor);*/
-/*}*/
-/*.task-item-done .task-img,*/
-/*.task-item-done .task-txt,*/
-/*.task-item-done .task-create-date,*/
-/*.task-item-done .task-edited {*/
-/*  opacity: .5;*/
-/*}*/
 
 .task-create-date,
 .task-edited {

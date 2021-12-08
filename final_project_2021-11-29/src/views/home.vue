@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <router-link class="btn" to="/registration">Sign Up</router-link> or <router-link class="btn" to="/auth">Log In</router-link>
-    <router-view />
+    <transition name="popup">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -13,6 +15,12 @@ import {PUSH_TEST_STORAGE, GET_ACTIVE_USER} from "../types/actions";
 
 export default {
   name: 'Home',
+
+  inject: ['setBodyClass'],
+
+  created() {
+    this.setBodyClass();
+  },
 
   computed: {
     ...mapState('todo/', {
@@ -38,4 +46,12 @@ export default {
 </script>
 
 <style scoped>
+
+.popup-enter-active, .popup-live-active {
+  transition: opacity .4s;
+}
+
+.popup-enter, .popup-leave-to {
+  opacity: 0;
+}
 </style>

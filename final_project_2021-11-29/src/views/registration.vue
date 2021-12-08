@@ -85,6 +85,8 @@ export default {
     }
   },
 
+  inject: ['setBodyClass'],
+
   computed: {
     ...mapState('todo/', {
       ActiveUser: state => state.ActiveUser,
@@ -97,6 +99,10 @@ export default {
   async beforeCreate() {
     await this.$store.dispatch(`todo/${GET_USERS_LIST}`);
     this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
+  },
+
+  created() {
+    this.setBodyClass();
   },
 
   methods: {
@@ -141,7 +147,8 @@ export default {
         this.validation.userNameLength = true;
       }
 
-      if (!this.validation.userEmailExists &&
+      if (this.credentials.userEmail &&
+          !this.validation.userEmailExists &&
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.[a-z]{2,})$/.test(this.credentials.userEmail)) {
         this.validation.userEmailFormat = true;
       }

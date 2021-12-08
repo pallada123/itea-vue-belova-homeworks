@@ -30,6 +30,12 @@ export default {
     EditForm
   },
 
+  inject: ['setBodyClass'],
+
+  created() {
+    this.setBodyClass();
+  },
+
   computed: {
     ...mapState('todo/', {
       UserToDoList: state => state.UserToDoList,
