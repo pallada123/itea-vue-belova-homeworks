@@ -28,7 +28,7 @@ export default {
   --text-size-small: 14px;
   --text-color-error: #e91e63;
 
-  --link-color: #6897bb;
+  --link-color: #3c3f41;
 
   --btn-bgcolor: #3c3f41;
   --btn-color: #afb1b3;

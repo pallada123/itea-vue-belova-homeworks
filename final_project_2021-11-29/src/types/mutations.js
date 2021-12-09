@@ -2,3 +2,4 @@ export const SET_ACTIVE_USER = 'SET_ACTIVE_USER'
 export const SET_USERS_LIST = 'SET_USERS_LIST'
 export const SET_USER_TODO_LIST = 'SET_USER_TODO_LIST'
 
+export const SET_HISTORY = 'SET_HISTORY'

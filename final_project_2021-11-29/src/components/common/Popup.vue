@@ -50,6 +50,10 @@ export default {
   border-radius: 20px;
 }
 
+.popup-history #popup-item {
+  width: 700px;
+}
+
 button.popup-close {
   border: solid 1px #000;
   border-radius: 999px;

@@ -7,9 +7,7 @@
       <router-link to="/todos">Uncompleted tasks</router-link>
     </div>
 
-    <task-wrap
-        :to-do-list="UserToDoListCompleted"
-    />
+    <task-wrap />
   </div>
 </template>
 
@@ -39,10 +37,7 @@ export default {
   computed: {
     ...mapState('todo/', {
       UserToDoList: state => state.UserToDoList,
-      ActiveUser: state => state.ActiveUser,
-      UserToDoListCompleted: state => {
-        return state.UserToDoList.filter(task => task.isDone)
-      }
+      ActiveUser: state => state.ActiveUser
     })
   },
 

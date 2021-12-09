@@ -51,9 +51,11 @@
 
 <script>
 
+import {mapGetters, mapState} from 'vuex';
 import ActionButton from '@/components/common/ActionButton';
 import InputText from '@/components/common/InputText';
 import EditForm from "@/components/task/EditForm";
+import {UPDATE_HISTORY} from "../../types/actions";
 
 export default {
   name: "Task",
@@ -77,6 +79,16 @@ export default {
     ActionButton
   },
 
+  computed: {
+    ...mapState('todo/', {
+      ActiveUser: state => state.ActiveUser,
+    }),
+    ...mapGetters([
+      'getCurrentDate'
+    ])
+
+  },
+
   methods: {
 
     /**
@@ -84,10 +96,14 @@ export default {
      */
     toggleTaskDone() {
       this.task.isDone = !this.task.isDone;
+      this.updateHistory(this.task.isDone ? 'done' : 'undone');
       this.$emit('task-change', this.task);
+
+      // !!!!!!!!!
     },
 
     changeStatus() {
+      this.updateHistory(this.task.taskStatus ? this.task.taskStatus : 'default');
       this.$emit('task-change', this.task);
     },
 
@@ -114,8 +130,19 @@ export default {
     saveTask(editedTask) {
       this.isEditing = false;
       editedTask.isEdited = true;
+      this.updateHistory('update');
       this.$emit('task-change', editedTask);
     },
+
+    updateHistory(action) {
+
+      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
+        type: 'task',
+        user: this.ActiveUser.userNickname,
+        date: this.$store.getters.getCurrentDate,
+        action: action,
+        task: this.task.taskName});
+    }
 
   }
 }

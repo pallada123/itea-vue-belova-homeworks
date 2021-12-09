@@ -40,8 +40,8 @@ const blankFilters = {
 import Task from '@/components/task/Task';
 import Filters from '@/components/task/Filters';
 import ActionButton from "@/components/common/ActionButton";
-import {mapState} from 'vuex';
-import {UPDATE_TODO_LIST} from "../../types/actions";
+import {mapState, mapGetters} from 'vuex';
+import {UPDATE_HISTORY, UPDATE_TODO_LIST} from "../../types/actions";
 
 export default {
   name: "TaskWrap",
@@ -53,8 +53,12 @@ export default {
 
   computed: {
     ...mapState('todo/', {
-      UserToDoList: state => state.UserToDoList
-    })
+      UserToDoList: state => state.UserToDoList,
+      ActiveUser: state => state.ActiveUser,
+    }),
+    ...mapGetters([
+      'getCurrentDate'
+    ])
   },
 
   data() {
@@ -76,6 +80,12 @@ export default {
       let deleteTaskIndex = this.UserToDoList.findIndex(item => item.taskId === task.taskId);
       this.UserToDoList.splice(deleteTaskIndex, 1);
       this.$store.dispatch(`todo/${UPDATE_TODO_LIST}`, this.UserToDoList);
+      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
+        type: 'task',
+        user: this.ActiveUser.userNickname,
+        date: this.$store.getters.getCurrentDate,
+        action: 'delete',
+        task: task.taskName});
     },
 
     setPagesFullList() {
@@ -106,7 +116,7 @@ export default {
 
         return true;
 
-      });
+      }).reverse();
     },
 
     clearFilters() {

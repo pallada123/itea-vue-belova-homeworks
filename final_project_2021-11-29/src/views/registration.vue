@@ -40,8 +40,8 @@
 
 <script>
 
-import {mapState} from 'vuex';
-import {GET_ACTIVE_USER, GET_USERS_LIST, UPDATE_USERS_LIST} from "../types/actions";
+import {mapState, mapGetters} from 'vuex';
+import {GET_ACTIVE_USER, GET_USERS_LIST, UPDATE_HISTORY, UPDATE_USERS_LIST} from "../types/actions";
 import InputText from "../components/common/InputText";
 import ActionButton from "../components/common/ActionButton";
 import Popup from "../components/common/Popup";
@@ -92,7 +92,10 @@ export default {
       ActiveUser: state => state.ActiveUser,
       UsersList: state => state.UsersList
 
-    })
+    }),
+    ...mapGetters([
+      'getCurrentDate'
+    ])
   },
 
 
@@ -189,6 +192,7 @@ export default {
       this.UsersList.push(user);
 
       this.$store.dispatch(`todo/${UPDATE_USERS_LIST}`, {user: user, userList: this.UsersList});
+      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {type: 'user', user: this.credentials.userNickname, date: this.$store.getters.getCurrentDate, action: 'reg'});
 
       this.$router.push('/todos');
     },

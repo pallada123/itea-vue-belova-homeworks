@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../api/todo'
 
 import {
   SET_ACTIVE_USER,

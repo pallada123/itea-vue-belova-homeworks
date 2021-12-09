@@ -12,7 +12,7 @@
 
 
       <transition name="history">
-        <popup @close-popup="hideHistory" v-if="showHistory">
+        <popup @close-popup="hideHistory" v-if="showHistory" :class="'popup-history'">
           <history />
         </popup>
       </transition>

@@ -45,8 +45,14 @@ const blankTask = {
 };
 
 
-import {mapState} from 'vuex';
-import {GET_ACTIVE_USER, GET_USER_TODO_LIST, UPDATE_TODO_LIST, CHANGE_ACTIVE_USER} from "../types/actions";
+import {mapState, mapGetters} from 'vuex';
+import {
+  GET_ACTIVE_USER,
+  GET_USER_TODO_LIST,
+  UPDATE_TODO_LIST,
+  CHANGE_ACTIVE_USER,
+  UPDATE_HISTORY
+} from "../types/actions";
 import EditForm from "../components/task/EditForm";
 import TaskWrap from "../components/task/TaskWrap";
 import ActionButton from "../components/common/ActionButton";
@@ -78,7 +84,11 @@ export default {
     ...mapState('todo/', {
       UserToDoList: state => state.UserToDoList,
       ActiveUser: state => state.ActiveUser,
-    })
+    }),
+    ...mapGetters([
+      'getCurrentDate'
+    ])
+
   },
 
   /**
@@ -112,20 +122,26 @@ export default {
     saveTask(newTask) {
       this.isAdding = false;
       newTask.taskId = this.getNewTaskId();
-      newTask.taskCreationDate = this.getCurrentDate();
+      newTask.taskCreationDate = this.$store.getters.getCurrentDate;
       this.UserToDoList.push(newTask);
       this.blankTask = Object.assign({}, blankTask);
       this.$store.dispatch(`todo/${UPDATE_TODO_LIST}`, this.UserToDoList);
+      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
+        type: 'task',
+        user: this.ActiveUser.userNickname,
+        date: this.$store.getters.getCurrentDate,
+        action: 'add',
+        task: newTask.taskName});
     },
 
     /**
      *
      * @returns {string} - текущие дата и временя в нужном формате
      */
-    getCurrentDate() {
-      let d = new Date();
-      return `${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}, ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`;
-    },
+    // getCurrentDate() {
+    //   let d = new Date();
+    //   return `${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}, ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`;
+    // },
 
     /**
      * вычисление ID добавляемой таски
