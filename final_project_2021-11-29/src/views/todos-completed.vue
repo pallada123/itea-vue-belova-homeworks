@@ -1,13 +1,21 @@
 <template>
   <div>
-    <action-button @btn-click="logOut">Log Out</action-button>
 
-    <h1 v-if="ActiveUser">{{ActiveUser.userNickname}}'s Completed Tasks</h1>
-    <div id="nav">
-      <router-link to="/todos">Uncompleted tasks</router-link>
+    <div v-if="ActiveUser">
+
+      <action-button @btn-click="logOut">Log Out</action-button>
+
+      <h1>{{ActiveUser.userNickname}}'s Completed Tasks</h1>
+      <div id="nav">
+        <router-link to="/todos">Uncompleted tasks</router-link>
+      </div>
+
+      <task-wrap />
+
     </div>
 
-    <task-wrap />
+    <unauthorized v-else />
+
   </div>
 </template>
 
@@ -18,6 +26,7 @@ import {GET_ACTIVE_USER, GET_USER_TODO_LIST, CHANGE_ACTIVE_USER} from "../types/
 import ActionButton from "../components/common/ActionButton";
 import TaskWrap from "../components/task/TaskWrap";
 import EditForm from "../components/task/EditForm";
+import Unauthorized from "../components/task/Unauthorized";
 
 export default {
   name: "Todos-completed",
@@ -25,7 +34,8 @@ export default {
   components: {
     TaskWrap,
     ActionButton,
-    EditForm
+    EditForm,
+    Unauthorized
   },
 
   inject: ['setBodyClass'],
@@ -47,10 +57,7 @@ export default {
    */
   async beforeCreate() {
     await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
-    if (!this.ActiveUser) {
-      this.$router.push('/');
-    } else {
-
+    if (this.ActiveUser) {
       await this.$store.dispatch(`todo/${GET_USER_TODO_LIST}`);
     }
   },

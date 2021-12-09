@@ -1,37 +1,46 @@
 <template>
   <div>
 
-    <action-button @btn-click="logOut">Log Out</action-button>
+    <div v-if="ActiveUser">
 
-    <h1 v-if="ActiveUser">{{ActiveUser.userNickname}}'s To Do List</h1>
+      <action-button @btn-click="logOut">Log Out</action-button>
 
-    <div id="nav">
-      <router-link to="/todos-completed">Completed tasks</router-link>
-    </div>
+      <h1>{{ActiveUser.userNickname}}'s To Do List</h1>
 
-    <transition name="task" v-if="isAdding">
-
-      <edit-form
-          :task="blankTask"
-          @cancel-editing="cancelAdding"
-          @save-task="saveTask"
-      />
-
-    </transition>
-
-    <transition name="task" v-else>
-
-      <div class="add-task-btn">
-        <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
+      <div id="nav">
+        <router-link to="/todos-completed">Completed tasks</router-link>
       </div>
 
-    </transition>
+      <transition name="task" v-if="isAdding">
 
-    <task-wrap />
+        <edit-form
+            :task="blankTask"
+            @cancel-editing="cancelAdding"
+            @save-task="saveTask"
+        />
+
+      </transition>
+
+      <transition name="task" v-else>
+
+        <div class="add-task-btn">
+          <action-button @btn-click="isAdding = !isAdding">Add Task</action-button>
+        </div>
+
+      </transition>
+
+      <task-wrap />
+
+
+    </div>
+
+    <unauthorized v-else />
+
   </div>
 </template>
 
 <script>
+
 
 const blankTask = {
   taskId: null,
@@ -56,6 +65,7 @@ import {
 import EditForm from "../components/task/EditForm";
 import TaskWrap from "../components/task/TaskWrap";
 import ActionButton from "../components/common/ActionButton";
+import Unauthorized from "../components/task/Unauthorized";
 
 export default {
   name: "Todos",
@@ -71,7 +81,8 @@ export default {
   components: {
     TaskWrap,
     ActionButton,
-    EditForm
+    EditForm,
+    Unauthorized
   },
 
   inject: ['setBodyClass'],
@@ -97,10 +108,7 @@ export default {
    */
   async beforeCreate() {
     await this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
-    if (!this.ActiveUser) {
-      this.$router.push('/');
-    } else {
-
+    if (this.ActiveUser) {
       await this.$store.dispatch(`todo/${GET_USER_TODO_LIST}`);
     }
   },

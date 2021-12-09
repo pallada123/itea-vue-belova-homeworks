@@ -10,20 +10,18 @@
       <action-button :class="'btn-visual'" @btn-click="taskStyle = !taskStyle">{{ 'Show ' + (taskStyle ? 'grid' : 'list') }}</action-button>
     </div>
 
-    <div id="task-wrap" :class="taskStyle ? '' : 'task-wrap-grid'">
+    <transition-group name="tasks" tag="div" id="task-wrap" :class="taskStyle ? '' : 'task-wrap-grid'">
 
-      <transition-group name="tasks">
+      <task
+          v-for="task in setPagesFilteredList()"
+          :key="task.taskId"
+          :task="task"
+          @task-change="updateTask"
+          @task-delete="deleteTask"
+      />
 
-        <task
-            v-for="task in setPagesFilteredList()"
-            :key="task.taskId"
-            :task="task"
-            @task-change="updateTask"
-            @task-delete="deleteTask"
-        />
+    </transition-group>
 
-      </transition-group>
-    </div>
   </div>
 </template>
 

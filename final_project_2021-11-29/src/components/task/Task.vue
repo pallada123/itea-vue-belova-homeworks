@@ -12,37 +12,43 @@
 
     <div class="task-item" v-else>
 
-      <div class="task-img">
-        <img :src="task.taskImgUrl ? task.taskImgUrl : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'" />
-      </div>
-      <div class="task-txt">
-        <p class="task-head">{{ task.taskName }}</p>
-        <p class="task-body">{{ task.taskDescription }}</p>
+      <div class="task-content">
+        <div class="task-img">
+          <img :src="task.taskImgUrl ? task.taskImgUrl : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'" />
+        </div>
+        <div class="task-txt">
+          <p class="task-head">{{ task.taskName }}</p>
+          <p class="task-body">{{ task.taskDescription }}</p>
 
-      </div>
-
-      <div class="task-btns">
-
-        <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ (showActions ? 'Hide' : 'Show') + ' actions' }}</action-button>
-
-        <div v-show="showActions">
-          <action-button @btn-click="toggleTaskDone">{{ 'Mark ' + (task.isDone ? 'Undone' : 'Done') }}</action-button>
-          <action-button @btn-click="setEditing">Edit</action-button>
-          <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
-          <br>
-          <label>Change status</label>
-          <select v-model="task.taskStatus" @change="changeStatus">
-            <option value="">No status</option>
-            <option value="red">Red</option>
-            <option value="yellow">Yellow</option>
-            <option value="green">Green</option>
-          </select>
         </div>
 
+        <div class="task-btns">
+
+          <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ (showActions ? 'Hide' : 'Show') + ' actions' }}</action-button>
+
+          <div v-show="showActions">
+            <action-button @btn-click="toggleTaskDone">{{ 'Mark ' + (task.isDone ? 'Undone' : 'Done') }}</action-button><br>
+            <action-button @btn-click="setEditing">Edit</action-button><br>
+            <action-button @btn-click="$emit('task-delete', task)">Delete</action-button>
+            <br>
+            <label>Change status</label>
+            <select v-model="task.taskStatus" @change="changeStatus">
+              <option value="">No status</option>
+              <option value="red">Red</option>
+              <option value="yellow">Yellow</option>
+              <option value="green">Green</option>
+            </select>
+          </div>
+
+        </div>
       </div>
 
-      <div class="task-create-date">Created: {{ task.taskCreationDate }}</div>
-      <div class="task-edited" v-if="task.isEdited">Task was edited</div>
+      <div class="task-bottom">
+        <div class="task-create-date">Created: {{ task.taskCreationDate }}</div>
+        <div class="task-edited" v-if="task.isEdited">Task was edited</div>
+      </div>
+
+
 
     </div>
 
@@ -173,15 +179,38 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-line-pack: justify;
+  align-content: space-between;
+  padding: 20px 20px 62px 20px;
+  transition: all .35s ease-in-out;
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+
+.task-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  padding: 20px;
-  transition: all .35s ease-in-out;
-  width: 100%;
-  position: relative;
+
+}
+.task-bottom {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 42px;
+  /*-ms-flex-item-align: end;*/
+  /*align-self: flex-end;*/
+
 }
 
 .task-img {width: 200px; margin-right: 20px;}
@@ -226,8 +255,9 @@ export default {
 }
 .task-create-date {padding-top: 10px;}
 
+
 #task-wrap.task-wrap-grid .task-container {
-  width: calc(50% - 10px);
+  width: calc(33.33% - 13px);
 }
 
 #task-wrap.task-wrap-grid .task-img,
@@ -250,5 +280,51 @@ export default {
   -webkit-box-ordinal-group: 5;
   -ms-flex-order: 4;
   order: 4;
+}
+
+@media only screen and (max-width: 1200px) {
+  #task-wrap.task-wrap-grid .task-container {
+    width: calc(50% - 10px);
+  }
+}
+
+@media only screen and (max-width: 820px) {
+  #task-wrap .task-img,
+  #task-wrap .task-btns {
+    width: calc(50% - 20px);
+  }
+  #task-wrap .task-txt {
+    width: 100%;
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+    padding-top: 20px;
+  }
+  #task-wrap .task-create-date {
+    -webkit-box-ordinal-group: 4;
+    -ms-flex-order: 3;
+    order: 3;
+  }
+  #task-wrap .task-edited {
+    -webkit-box-ordinal-group: 5;
+    -ms-flex-order: 4;
+    order: 4;
+  }
+  #task-wrap.task-wrap-grid .task-container {
+    width: 100%;
+  }
+
+}
+@media only screen and (max-width: 450px) {
+  .task-content {display: block;}
+  #task-wrap .task-img,
+  #task-wrap .task-btns,
+  #task-wrap.task-wrap-grid .task-img,
+  #task-wrap.task-wrap-grid .task-btns {
+    width: 100%;
+    min-width: auto;
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 </style>

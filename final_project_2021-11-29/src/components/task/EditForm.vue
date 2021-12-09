@@ -137,11 +137,7 @@ export default {
 
 .edit-btns {text-align: right;}
 
-/*.edit-enter-active, .edit-leave-active {*/
-/*  transition: all .5s;*/
-/*}*/
-/*.edit-enter, .edit-leave-to {*/
-/*  opacity: 0;*/
-/*  left: 200px;*/
-/*}*/
+@media only screen and (max-width: 610px) {
+  .edit-btns {text-align: center;}
+}
 </style>

@@ -5,10 +5,12 @@
     <div id="popup-item">
 
       <div class="popup-body">
-        <slot></slot>
-      </div>
+        <div class="popup-content">
+          <slot></slot>
+        </div>
 
-      <button type="button" class="popup-close" @click="$emit('close-popup')"></button>
+        <button type="button" class="popup-close" @click="$emit('close-popup')"></button>
+      </div>
 
 
     </div>
@@ -39,8 +41,8 @@ export default {
   -webkit-box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   box-shadow: 10px 17px 30px rgba(26,23,20,.35);
   width: 400px;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 95vw;
+  max-height: 95vh;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -104,4 +106,15 @@ button.popup-close:hover {
   width: 100%;
 }
 .popup-body .task-btns {text-align: center; padding: 20px 0;}
+
+@media only screen and (max-width: 1024px) {
+  #popup-item,
+  .popup-body {
+    width: 95vw;
+    height: 95vh;
+  }
+  .popup-content {
+    overflow-y: auto;height: 100%;
+  }
+}
 </style>
