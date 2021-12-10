@@ -103,7 +103,7 @@ export default {
   },
 
   /**
-   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
+   *
    * @returns {Promise<void>}
    */
   async beforeCreate() {
@@ -116,7 +116,7 @@ export default {
   methods: {
 
     /**
-     * отмена добавления таски - скрытие формы добавления
+     *
      */
     cancelAdding() {
       this.isAdding = false;
@@ -124,7 +124,7 @@ export default {
     },
 
     /**
-     * сообщает родительскому компоненту о необходимости обновить юзера, потому что изменился его список тасок (одна таска добавилась)
+     *
      * @param newTask
      */
     saveTask(newTask) {
@@ -144,15 +144,6 @@ export default {
 
     /**
      *
-     * @returns {string} - текущие дата и временя в нужном формате
-     */
-    // getCurrentDate() {
-    //   let d = new Date();
-    //   return `${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}, ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`;
-    // },
-
-    /**
-     * вычисление ID добавляемой таски
      * @returns {number}
      */
     getNewTaskId() {
@@ -164,7 +155,8 @@ export default {
     },
 
     /**
-     * вылогинивание текущего юзера
+     *
+     * @returns {Promise<void>}
      */
     async logOut() {
       await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, 0);

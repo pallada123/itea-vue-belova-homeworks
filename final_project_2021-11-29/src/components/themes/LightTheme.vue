@@ -10,6 +10,9 @@ export default {
     return this.$slots.default
   },
   methods: {
+    /**
+     *
+     */
     setBodyClass() {
       const body = document.body;
       body.classList.remove('dark-theme');

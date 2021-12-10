@@ -98,40 +98,39 @@ export default {
   methods: {
 
     /**
-     * переключает статус таски с выполненной на невыполненную и обратно
+     *
      */
     toggleTaskDone() {
       this.task.isDone = !this.task.isDone;
       this.updateHistory(this.task.isDone ? 'done' : 'undone');
       this.$emit('task-change', this.task);
-
-      // !!!!!!!!!
     },
 
+    /**
+     *
+     */
     changeStatus() {
       this.updateHistory(this.task.taskStatus ? this.task.taskStatus : 'default');
       this.$emit('task-change', this.task);
     },
 
     /**
-     * включает режим редактирования таски
+     *
      */
     setEditing() {
       this.isEditing = true;
     },
 
     /**
-     * выключает режим редактирования таски (если нажали отмену)
+     *
      */
     cancelEditing() {
       this.isEditing = false;
     },
 
     /**
-     * выключает режим редактирования таски (если нажали сохранить),
-     * передаёт в родительский компонент событие "таска изменилась" и объект таски
-     * @param editedTask - изменённая таска
      *
+     * @param editedTask
      */
     saveTask(editedTask) {
       this.isEditing = false;
@@ -140,6 +139,10 @@ export default {
       this.$emit('task-change', editedTask);
     },
 
+    /**
+     *
+     * @param action
+     */
     updateHistory(action) {
 
       this.$store.dispatch(`history/${UPDATE_HISTORY}`, {

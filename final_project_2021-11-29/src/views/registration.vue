@@ -98,7 +98,10 @@ export default {
     ])
   },
 
-
+  /**
+   *
+   * @returns {Promise<void>}
+   */
   async beforeCreate() {
     await this.$store.dispatch(`todo/${GET_USERS_LIST}`);
     this.$store.dispatch(`todo/${GET_ACTIVE_USER}`);
@@ -109,11 +112,17 @@ export default {
   },
 
   methods: {
+
+    /**
+     *
+     */
     closePopup() {
       this.$router.push('/');
     },
 
-
+    /**
+     *
+     */
     addUser() {
 
       this.validation.userNameLength = false;
@@ -198,7 +207,7 @@ export default {
     },
 
     /**
-     * вычисление ID добавляемого юзера
+     *
      * @returns {number}
      */
     getNewUserId() {

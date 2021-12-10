@@ -68,12 +68,20 @@ export default {
 
   methods: {
 
+    /**
+     *
+     * @param task
+     */
     updateTask(task) {
       let updatedTaskIndex = this.UserToDoList.findIndex(item => item.taskId === task.taskId);
       this.UserToDoList.splice(updatedTaskIndex, 1, task);
       this.$store.dispatch(`todo/${UPDATE_TODO_LIST}`, this.UserToDoList);
     },
 
+    /**
+     *
+     * @param task
+     */
     deleteTask(task) {
       let deleteTaskIndex = this.UserToDoList.findIndex(item => item.taskId === task.taskId);
       this.UserToDoList.splice(deleteTaskIndex, 1);
@@ -86,6 +94,10 @@ export default {
         task: task.taskName});
     },
 
+    /**
+     *
+     * @returns {*}
+     */
     setPagesFullList() {
       if (this.$route.path === '/todos') {
         return this.UserToDoList.filter(task => !task.isDone);
@@ -96,6 +108,10 @@ export default {
       }
     },
 
+    /**
+     *
+     * @returns {*}
+     */
     setPagesFilteredList() {
 
       return this.setPagesFullList().filter(task => {
@@ -117,6 +133,9 @@ export default {
       }).reverse();
     },
 
+    /**
+     *
+     */
     clearFilters() {
       this.filters = Object.assign({}, blankFilters);
     }
@@ -126,8 +145,6 @@ export default {
 
 <style scoped>
 .task-style-btn {text-align: right; margin-bottom: 10px;}
-
-
 
 #task-wrap {
   display: block;

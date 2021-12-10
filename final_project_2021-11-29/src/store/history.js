@@ -25,10 +25,22 @@ export default {
 
     actions: {
 
+        /**
+         *
+         * @param commit
+         */
         [GET_HISTORY]({commit}) {
             commit(SET_HISTORY, api.pullStorage());
         },
 
+        /**
+         *
+         * @param commit
+         * @param state
+         * @param dispatch
+         * @param payload
+         * @returns {Promise<void>}
+         */
         async [UPDATE_HISTORY]({commit, state, dispatch}, payload) {
             await dispatch(GET_HISTORY);
             let data = state.History;

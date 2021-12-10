@@ -46,6 +46,10 @@ export default {
     }
   },
   methods: {
+
+    /**
+     *
+     */
     hideHistory() {
       this.showHistory = false
     }

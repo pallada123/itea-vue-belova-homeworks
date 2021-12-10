@@ -48,28 +48,59 @@ export default {
       api.pushTestStorage();
     },
 
+    /**
+     *
+     * @param commit
+     */
     [GET_ACTIVE_USER]({commit}) {
       commit(SET_ACTIVE_USER, api.getActiveUser());
     },
 
+    /**
+     *
+     * @param commit
+     * @param user
+     */
     [CHANGE_ACTIVE_USER]({commit}, user) {
       commit(SET_ACTIVE_USER, user);
       api.setActiveUser(user ? user.userId : 0);
     },
 
+    /**
+     *
+     * @param commit
+     */
     [GET_USERS_LIST]({commit}) {
       commit(SET_USERS_LIST, api.getUsersList());
     },
 
+    /**
+     *
+     * @param commit
+     * @param state
+     */
     [GET_USER_TODO_LIST]({commit, state}) {
       commit(SET_USER_TODO_LIST, api.getUserToDoList(state.ActiveUser.userId));
     },
 
+    /**
+     *
+     * @param commit
+     * @param state
+     * @param toDoArray
+     */
     [UPDATE_TODO_LIST]({commit, state}, toDoArray) {
       commit(SET_USER_TODO_LIST, toDoArray);
       api.updateUserToDoList(state.ActiveUser.userId, toDoArray)
     },
 
+    /**
+     *
+     * @param commit
+     * @param state
+     * @param dispatch
+     * @param params
+     */
     [UPDATE_USERS_LIST]({commit, state, dispatch}, params) {
       commit(SET_USERS_LIST, params.userList);
       api.updateUsersList(params.user.userId, params.userList);

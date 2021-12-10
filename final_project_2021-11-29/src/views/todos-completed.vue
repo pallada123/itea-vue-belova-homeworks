@@ -52,7 +52,7 @@ export default {
   },
 
   /**
-   * Не для тестирования: инициирует запрос из Local Storage ID активного пользователя
+   *
    * @returns {Promise<void>}
    */
   async beforeCreate() {
@@ -65,7 +65,8 @@ export default {
   methods: {
 
     /**
-     * вылогинивание текущего юзера
+     *
+     * @returns {Promise<void>}
      */
     async logOut() {
       await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, 0);

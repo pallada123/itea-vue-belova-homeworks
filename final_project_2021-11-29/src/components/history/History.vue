@@ -28,11 +28,22 @@ export default {
     })
 
   },
+
+  /**
+   *
+   * @returns {Promise<void>}
+   */
   async beforeCreate() {
     await this.$store.dispatch(`history/${GET_HISTORY}`);
   },
 
   methods: {
+
+    /**
+     *
+     * @param item
+     * @returns {string}
+     */
     getActionText(item) {
       let text;
 
