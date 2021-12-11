@@ -30,8 +30,7 @@ export default {
   },
 
   /**
-   *
-   * @returns {Promise<void>}
+   * инициирует получение в стор список записей истории
    */
   async beforeCreate() {
     await this.$store.dispatch(`history/${GET_HISTORY}`);
@@ -40,8 +39,8 @@ export default {
   methods: {
 
     /**
-     *
-     * @param item
+     * Подставляет соответствующую формулировку под вывод каждого действия в истории.
+     * @param item - одна запись истории
      * @returns {string}
      */
     getActionText(item) {

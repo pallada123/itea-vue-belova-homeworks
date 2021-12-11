@@ -4,6 +4,11 @@ import Vuex from 'vuex';
 import todo from './todo';
 import history from './history';
 
+/**
+ * Служебная функция конвертации части даты в нужный формат.
+ * @param period
+ * @returns {string}
+ */
 const calcDateFormat = (period) => {
   return ("0"+period).slice(-2);
 };
@@ -17,7 +22,7 @@ export default new Vuex.Store({
   },
   getters: {
     /**
-     *
+     * Отдаёт текущие дату и время в нужном формате.
      * @returns {`${number}-${string}-${string}, ${string}:${string}`}
      */
     getCurrentDate: () => {

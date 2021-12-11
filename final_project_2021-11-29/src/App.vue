@@ -48,7 +48,7 @@ export default {
   methods: {
 
     /**
-     *
+     * Показывает и прячет попап с историей.
      */
     hideHistory() {
       this.showHistory = false

@@ -53,7 +53,7 @@ export default {
   },
 
   /**
-   *
+   * Инициирует получение активного пользователя и (если он есть) списка его задач в сторе.
    * @returns {Promise<void>}
    */
   async beforeCreate() {
@@ -66,7 +66,8 @@ export default {
   methods: {
 
     /**
-     *
+     * Инициирует обнуление активного пользователя в сторе и мутацию в сторе state UserToDoList на пустой массив.
+     * Редирект на главную страницу.
      * @returns {Promise<void>}
      */
     async logOut() {

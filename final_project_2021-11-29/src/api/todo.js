@@ -3,8 +3,10 @@ import testDataBase from '../data/testStorageData.js'; // for testing only
 const storageName = 'toDoList';
 
 const api =  {
+
     /**
-     *
+     * For testing only:
+     * отправляет в объект тестовых пользователей
      */
     pushTestStorage() {
         if (!this.pullStorage().usersList.length) {
@@ -13,8 +15,10 @@ const api =  {
     },
 
     /**
-     *
-     * @returns {any}
+     * Запрашивает из ЛС полный объект данных.
+     * Если ЛС с соответствующим именем ещё не существует - отправляет туда шаблон.
+
+     * @returns {any} - полный объект данных стореджа.
      */
     pullStorage() {
         if (!localStorage.getItem(storageName)) {
@@ -29,8 +33,9 @@ const api =  {
     },
 
     /**
-     *
-     *
+     * Если хотя бы один пользователь уже существует в ЛС -
+     * отдаёт массив объектов пользователей.
+     * Если нет ни одного пользователя - отдаёт null.
      */
     getActiveUser() {
         const data = this.pullStorage();
@@ -41,7 +46,7 @@ const api =  {
     },
 
     /**
-     *
+     * Получает из ЛС и отдаёт ID активного пользователя.
      * @param activeUserId
      */
     setActiveUser(activeUserId) {
@@ -51,7 +56,11 @@ const api =  {
     },
 
     /**
+     * При регистрации нового пользователя.
+     * Плучает ID нового пользователя и массив всех пользователей, включая нового, и отправляет в ЛС.
      *
+     * Если пользователя с полученным ID ранее не существовало, отправляет в ЛС шаблон под todolist нового пользователя.
+
      * @param userId
      * @param usersArray
      */
@@ -71,7 +80,9 @@ const api =  {
     },
 
     /**
-     *
+     * Когда пользователь добавил / изменил / удалил таску.
+     * Принимает ID пользователя и массив всех задач этого пользователя.
+     * Обновляет массив задач пользователя в ЛС.
      * @param userId
      * @param toDoArray
      */
@@ -85,9 +96,9 @@ const api =  {
     },
 
     /**
-     *
+     * Находит в ЛС и отдаёт массив задач пользователя с полученным ID.
      * @param userId
-     * @returns {[]|[{taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}]|[{taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}, {taskDescription: string, taskImgUrl: string, taskName: string, isEdited: boolean, isDone: boolean, taskId: number, taskStatus: string, taskCreationDate: string}]|*}
+     * @returns {}
      */
     getUserToDoList(userId) {
         const data = this.pullStorage();
@@ -96,8 +107,7 @@ const api =  {
     },
 
     /**
-     *
-     * @returns {[]|[{userPassword: string, userNickname: string, userEmail: string, userName: string, userId: number}, {userPassword: string, userNickname: string, userEmail: string, userName: string, userId: number}, {userPassword: string, userNickname: string, userEmail: string, userName: string, userId: number}]|*}
+     * Получает из ЛС и отдаёт массив объектов всех пользователей.
      */
     getUsersList() {
         const data = this.pullStorage();

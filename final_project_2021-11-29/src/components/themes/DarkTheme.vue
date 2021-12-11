@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     /**
-     *
+     * Навешивает на body необходимые классы и инлайн-стили.
      */
     setBodyClass() {
       const body = document.body;

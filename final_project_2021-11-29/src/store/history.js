@@ -26,7 +26,7 @@ export default {
     actions: {
 
         /**
-         *
+         * Получает из ЛС и инициирует мутацию state History.
          * @param commit
          */
         [GET_HISTORY]({commit}) {
@@ -34,7 +34,10 @@ export default {
         },
 
         /**
-         *
+         * Иниццирует получение истории из ЛС.
+         * Добавляет в массив истории новую запись.
+         * Иницирует мутацию state History.
+         * Отправляет в ЛС изменённую истори.
          * @param commit
          * @param state
          * @param dispatch

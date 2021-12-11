@@ -3,8 +3,10 @@ const storageName = 'history';
 const api =  {
 
     /**
-     *
-     * @returns {any}
+     * Запрашивает из ЛС полный массив данных.
+     * Если ЛС с соответствующим именем ещё не существует - отправляет туда пустой массив.
+
+     * @returns {any} - полный массив данных стореджа.
      */
     pullStorage() {
         const storage = localStorage.getItem(storageName);
@@ -17,7 +19,7 @@ const api =  {
     },
 
     /**
-     *
+     * Принимает и отправляет в ЛС изменёный массив истории.
      * @param data
      */
     updateHistory(data) {

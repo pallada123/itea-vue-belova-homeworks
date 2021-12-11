@@ -105,7 +105,7 @@ export default {
   },
 
   /**
-   *
+   * Инициирует получение активного пользователя и (если он есть) списка его задач в сторе.
    * @returns {Promise<void>}
    */
   async beforeCreate() {
@@ -118,7 +118,7 @@ export default {
   methods: {
 
     /**
-     *
+     * Отмена добавления новой задачи.
      */
     cancelAdding() {
       this.isAdding = false;
@@ -126,7 +126,9 @@ export default {
     },
 
     /**
-     *
+     * СОхранение добавленной задачи:
+     * Добавление новой задачи в массив задач активного пользователя.
+     * Инициация изменений в сторе списка задач и истории.
      * @param newTask
      */
     saveTask(newTask) {
@@ -148,7 +150,7 @@ export default {
     },
 
     /**
-     *
+     * Вычисление ID добавляемой зазачи.
      * @returns {number}
      */
     getNewTaskId() {
@@ -160,7 +162,8 @@ export default {
     },
 
     /**
-     *
+     * Инициирует обнуление активного пользователя в сторе и мутацию в сторе state UserToDoList на пустой массив.
+     * Редирект на главную страницу.
      * @returns {Promise<void>}
      */
     async logOut() {

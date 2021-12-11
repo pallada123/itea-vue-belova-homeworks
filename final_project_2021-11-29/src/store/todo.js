@@ -41,7 +41,7 @@ export default {
   actions: {
 
     /**
-     * for testing only
+     * for testing only: отправляет в ЛС тестовый список пользователей и из задачи.
      * @returns {*[]|any}
      */
     [PUSH_TEST_STORAGE]() {
@@ -49,7 +49,8 @@ export default {
     },
 
     /**
-     *
+     * Прлучает из ЛС ID активного пользователя.
+     * Инициирует мутацию state ActiveUser.
      * @param commit
      */
     [GET_ACTIVE_USER]({commit}) {
@@ -57,6 +58,10 @@ export default {
     },
 
     /**
+     * При логите, регистрации или вылогинивании:
+     * Получает объект активного пользователя.
+     * Вызывает мутацию state ActiveUser.
+     * Передаёт в ЛС новое ID активного пользователя.
      *
      * @param commit
      * @param user
@@ -67,7 +72,8 @@ export default {
     },
 
     /**
-     *
+     * Получает из ЛС список пользователей.
+     * Вызывает мутацию state UsersList.
      * @param commit
      */
     [GET_USERS_LIST]({commit}) {
@@ -75,7 +81,8 @@ export default {
     },
 
     /**
-     *
+     * Плучает из ЛС список задач активного пользователя.
+     * Вызывает мутацию state UserToDoList.
      * @param commit
      * @param state
      */
@@ -84,7 +91,9 @@ export default {
     },
 
     /**
-     *
+     * Принимает изменёный массив задач активного пользователя.
+     * Вызывает мутацию state UserToDoList.
+     * Передаёт в ЛС ID и изменёный массив задач активного пользователя.
      * @param commit
      * @param state
      * @param toDoArray
@@ -95,7 +104,11 @@ export default {
     },
 
     /**
-     *
+     * Принимает объект нового пользователя.
+     * Добавляет нового пользователя в массив пользователей.
+     * Вызывает мутацию state UsersList.
+     * Передаёт в ЛС ID нового пользователя и изменёный массив пользователей.
+     * Вызывает экшен изменения активного пользователя.
      * @param commit
      * @param state
      * @param dispatch

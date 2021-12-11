@@ -1,12 +1,13 @@
 <template>
   <div>
     <filters
+      v-if="setPagesFullList().length"
       :to-do-list="setPagesFullList()"
       :filters="filters"
       @clear-filters="clearFilters"
     />
 
-    <div class="task-style-btn">
+    <div class="task-style-btn" v-if="setPagesFullList().length">
       <action-button class="btn-visual btn-grid" @btn-click="taskStyle = !taskStyle">{{ 'Show ' + (taskStyle ? 'grid' : 'list') }}</action-button>
     </div>
 
@@ -69,7 +70,8 @@ export default {
   methods: {
 
     /**
-     *
+     * Находит изменённую таску в списке задач активного пользователя и переписывает её.
+     * Инициирует апдейт списка задач активного пользователя в сторе.
      * @param task
      */
     updateTask(task) {
@@ -79,7 +81,10 @@ export default {
     },
 
     /**
+     * Находит изменённую таску в списке задач активного пользователя и переписывает её.
+     * Инициирует апдейт списка задач активного пользователя в сторе.
      *
+     * Инициирует апдейт истории в сторе.
      * @param task
      */
     deleteTask(task) {
@@ -98,7 +103,7 @@ export default {
     },
 
     /**
-     *
+     * Отбирает задачи в зависимости от роута (только выполненные / только невыполненные).
      * @returns {*}
      */
     setPagesFullList() {
@@ -112,7 +117,7 @@ export default {
     },
 
     /**
-     *
+     * Отбирает список задач для показа в зависимости от применёных фильтров.
      * @returns {*}
      */
     setPagesFilteredList() {
@@ -137,7 +142,7 @@ export default {
     },
 
     /**
-     *
+     * Сбрасывает фильтры.
      */
     clearFilters() {
       this.filters = Object.assign({}, blankFilters);
