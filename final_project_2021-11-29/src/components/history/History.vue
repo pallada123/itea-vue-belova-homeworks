@@ -5,7 +5,7 @@
     <div v-if="history.length">
       <p v-for="(item, index) in history" :key="index" class="history-item">
         <span class="history-date">{{ item.date }}</span><br>
-        User <span class="history-user">{{ item.user }}</span> {{ getActionText(item) }}<span v-if="item.type === 'task'"> task <span class="history-title">{{ '"' + item.task + '"'}}</span></span>.
+        User <span class="history-user sup-tooltip">{{ item.user }}<sup>id: {{ item.userId }}</sup></span> {{ getActionText(item) }}<span v-if="item.type === 'task'"> task <span class="history-title sup-tooltip">{{ '"' + item.task + '"'}}<sup>id: {{ item.taskId }}</sup></span></span>.
       </p>
     </div>
 
@@ -107,7 +107,21 @@ export default {
   margin: 0 0 15px 0;
   padding: 0;
 }
-.history-date {opacity: .5;}
+.history-date {}
 .history-user {font-weight: bold;}
 .history-title {font-style: italic;}
+.history-item .sup-tooltip {display: inline-block; position: relative; border-bottom: dashed 1px var(--input-color);}
+.history-item .sup-tooltip sup {
+  display: none;
+  position: absolute;
+  top: -25px;
+  right: 0;
+  background-color: var(--task-border);
+  font-style: normal;
+  font-weight: normal;
+  padding: 5px;
+  border-radius: 3px;
+}
+.history-item .sup-tooltip:hover sup {display: block;}
+
 </style>

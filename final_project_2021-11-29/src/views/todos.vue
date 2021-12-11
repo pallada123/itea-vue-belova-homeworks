@@ -42,6 +42,7 @@
 <script>
 
 
+
 const blankTask = {
   taskId: null,
   taskName: '',
@@ -62,6 +63,7 @@ import {
   CHANGE_ACTIVE_USER,
   UPDATE_HISTORY
 } from "../types/actions";
+import {SET_USER_TODO_LIST} from "../types/mutations";
 import EditForm from "../components/task/EditForm";
 import TaskWrap from "../components/task/TaskWrap";
 import ActionButton from "../components/common/ActionButton";
@@ -137,9 +139,12 @@ export default {
       this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
         type: 'task',
         user: this.ActiveUser.userNickname,
+        userId: this.ActiveUser.userId,
         date: this.$store.getters.getCurrentDate,
         action: 'add',
-        task: newTask.taskName});
+        task: newTask.taskName,
+        taskId: newTask.taskId
+      });
     },
 
     /**
@@ -160,6 +165,7 @@ export default {
      */
     async logOut() {
       await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, 0);
+      this.$store.commit(`todo/${SET_USER_TODO_LIST}`, []);
       this.$router.push('/');
     },
   }

@@ -1,5 +1,5 @@
 <template>
-  <input :type="type ? type : 'text'" v-model.trim="inputValue" />
+  <input type="text" v-model.trim="inputValue" />
 </template>
 
 <script>
@@ -22,8 +22,7 @@ export default {
 </script>
 
 <style scoped>
-  input[type="text"],
-  input[type="password"]{
+  input[type="text"]{
     height: 32px;
     line-height: 32px;
     border: 1px solid var(--input-border);
@@ -37,14 +36,12 @@ export default {
     display: inline-block;
     min-width: 1px;
   }
-  input[disabled="disabled"] {opacity: .5;}
 
   .task-item input[type="text"] {
     background-color: var(--input-task-bgcolor);
   }
 
-  input[type="text"].input-error,
-  input[type="password"].input-error{
+  input[type="text"].input-error{
 
     border-color: var(--input-border-error);
   }

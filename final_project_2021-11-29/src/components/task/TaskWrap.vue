@@ -7,10 +7,10 @@
     />
 
     <div class="task-style-btn">
-      <action-button :class="'btn-visual'" @btn-click="taskStyle = !taskStyle">{{ 'Show ' + (taskStyle ? 'grid' : 'list') }}</action-button>
+      <action-button class="btn-visual btn-grid" @btn-click="taskStyle = !taskStyle">{{ 'Show ' + (taskStyle ? 'grid' : 'list') }}</action-button>
     </div>
 
-    <transition-group name="tasks" tag="div" id="task-wrap" :class="taskStyle ? '' : 'task-wrap-grid'">
+    <transition-group name="tasks" tag="div" id="task-wrap" :class="{'task-wrap-grid': !taskStyle}">
 
       <task
           v-for="task in setPagesFilteredList()"
@@ -89,9 +89,12 @@ export default {
       this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
         type: 'task',
         user: this.ActiveUser.userNickname,
+        userId: this.ActiveUser.userId,
         date: this.$store.getters.getCurrentDate,
         action: 'delete',
-        task: task.taskName});
+        task: task.taskName,
+        taskId: task.taskId
+      });
     },
 
     /**
@@ -178,5 +181,11 @@ export default {
 .tasks-leave-active {
   position: absolute;
   z-index:-1;
+}
+
+@media only screen and (max-width: 820px) {
+  .btn-grid {
+    display: none;
+  }
 }
 </style>

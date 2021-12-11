@@ -18,7 +18,7 @@
       @btn-click="filters.stateBtnBlank = !filters.stateBtnBlank;">Without status</action-button><br>
   <input-text v-bind:input.sync="filters.searchText" /><br>
   <action-button
-      :class="'btn-visual'"
+      class="btn-visual"
       @btn-click="$emit('clear-filters')">Clear filters</action-button>
 </div>
 </template>

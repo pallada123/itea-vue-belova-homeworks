@@ -1,8 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import todo from './todo'
-import history from './history'
+import todo from './todo';
+import history from './history';
+
+const calcDateFormat = (period) => {
+  return ("0"+period).slice(-2);
+};
 
 Vue.use(Vuex)
 
@@ -18,7 +22,8 @@ export default new Vuex.Store({
      */
     getCurrentDate: () => {
       let d = new Date();
-      return `${d.getFullYear()}-${("0"+(d.getMonth()+1)).slice(-2)}-${("0" + d.getDate()).slice(-2)}, ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`;
-    }
+      return `${d.getFullYear()}-${calcDateFormat(d.getMonth()+1)}-${calcDateFormat(d.getDate())}, ${calcDateFormat(d.getHours())}:${calcDateFormat(d.getMinutes())}:${calcDateFormat(d.getSeconds())}`;
+    },
   }
 })
+

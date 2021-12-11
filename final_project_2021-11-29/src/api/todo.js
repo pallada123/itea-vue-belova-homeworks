@@ -30,11 +30,11 @@ const api =  {
 
     /**
      *
-     * @returns {null|T}
+     *
      */
     getActiveUser() {
         const data = this.pullStorage();
-        if (!this.pullStorage().usersList) {
+        if (!data.usersList) {
             return null;
         }
         return data.usersList.find((item) => item.userId === data.activeUserId);

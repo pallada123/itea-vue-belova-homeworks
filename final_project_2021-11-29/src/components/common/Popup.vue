@@ -55,6 +55,10 @@ export default {
 .popup-history #popup-item {
   width: 700px;
 }
+.popup-history #popup-item,
+.popup-history .popup-body{
+  height: 600px;
+}
 
 button.popup-close {
   border: solid 1px #000;
@@ -95,6 +99,9 @@ button.popup-close:hover {
   text-align: center;
   margin-bottom: 30px;
 }
+.popup-content {
+  overflow-y: auto;height: 100%;
+}
 
 
 .login-item {margin-bottom: 15px;}
@@ -109,12 +116,11 @@ button.popup-close:hover {
 
 @media only screen and (max-width: 1024px) {
   #popup-item,
-  .popup-body {
+  .popup-body,
+  .popup-history #popup-item,
+  .popup-history .popup-body {
     width: 95vw;
     height: 95vh;
-  }
-  .popup-content {
-    overflow-y: auto;height: 100%;
   }
 }
 </style>

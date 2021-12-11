@@ -27,6 +27,7 @@ import ActionButton from "../components/common/ActionButton";
 import TaskWrap from "../components/task/TaskWrap";
 import EditForm from "../components/task/EditForm";
 import Unauthorized from "../components/task/Unauthorized";
+import {SET_USER_TODO_LIST} from "../types/mutations";
 
 export default {
   name: "Todos-completed",
@@ -70,6 +71,7 @@ export default {
      */
     async logOut() {
       await this.$store.dispatch(`todo/${CHANGE_ACTIVE_USER}`, 0);
+      this.$store.commit(`todo/${SET_USER_TODO_LIST}`, []);
       this.$router.push('/');
     },
   }

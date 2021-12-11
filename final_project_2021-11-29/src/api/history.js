@@ -7,11 +7,13 @@ const api =  {
      * @returns {any}
      */
     pullStorage() {
-        if (!localStorage.getItem(storageName) || !localStorage.getItem(storageName).length) {
+        const storage = localStorage.getItem(storageName);
+        if (!storage) {
             const data = [];
             localStorage.setItem(storageName, JSON.stringify(data));
+            return data;
         }
-        return JSON.parse(localStorage.getItem(storageName));
+        return JSON.parse(storage);
     },
 
     /**

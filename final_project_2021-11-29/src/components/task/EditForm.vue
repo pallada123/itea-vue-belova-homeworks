@@ -2,14 +2,14 @@
 
     <div class="edit-form">
       <div class="edit-item">
-        <label>Task name *</label><input-text :class="requiredError ? 'input-error' : ''" v-bind:input.sync="editingTask.taskName" />
+        <label>Task name *</label><input-text :class="{'input-error': requiredError}" v-bind:input.sync="editingTask.taskName" />
         <error-msg v-show="requiredError">{{ errorMsg }}</error-msg>
       </div>
       <div class="edit-item">
         <label>Task Description</label><input-text v-bind:input.sync="editingTask.taskDescription" />
       </div>
       <div class="edit-item">
-        <label>Task Image URL (.png or .jpg only)</label><input-text :class="imgError ? 'input-error' : ''" v-bind:input.sync="editingTask.taskImgUrl" />
+        <label>Task Image URL (.png or .jpg only)</label><input-text :class="{'input-error': imgError}" v-bind:input.sync="editingTask.taskImgUrl" />
         <error-msg v-show="imgError">{{ errorImgMsg }}</error-msg>
       </div>
       <div class="edit-btns">

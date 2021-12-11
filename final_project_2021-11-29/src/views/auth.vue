@@ -8,7 +8,7 @@
           <label>Nickname or email</label><input-text v-bind:input.sync="credentials.userNickname" />
         </div>
         <div class="login-item">
-          <label>Password</label><input-text :type="'password'" v-bind:input.sync="credentials.userPassword" />
+          <label>Password</label><input-password v-bind:input.sync="credentials.userPassword" />
         </div>
         <div class="task-btns">
           <action-button @btn-click="checkUser">Log In</action-button>
@@ -28,10 +28,11 @@ import InputText from "../components/common/InputText";
 import ActionButton from "../components/common/ActionButton";
 import Popup from "../components/common/Popup";
 import ErrorMsg from "../components/login/ErrorMsg";
+import InputPassword from "../components/common/InputPassword";
 
 export default {
   name: "Auth",
-  components: {ErrorMsg, ActionButton, InputText, Popup},
+  components: {InputPassword, ErrorMsg, ActionButton, InputText, Popup},
 
   inject: ['setBodyClass'],
 
@@ -87,7 +88,7 @@ export default {
       }
 
       let user = this.UsersList.find(item =>
-          (this.credentials.userNickname === item.userNickname || this.credentials.userNickname === item.userEmail) &&
+          (this.credentials.userNickname.toLowerCase() === item.userNickname.toLowerCase() || this.credentials.userNickname.toLowerCase() === item.userEmail.toLowerCase()) &&
           item.userPassword === this.credentials.userPassword);
 
       if (!user) {

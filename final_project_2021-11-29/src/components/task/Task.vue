@@ -24,7 +24,7 @@
 
         <div class="task-btns">
 
-          <action-button :class="'btn-visual'" @btn-click="showActions = !showActions">{{ (showActions ? 'Hide' : 'Show') + ' actions' }}</action-button>
+          <action-button class="btn-visual" @btn-click="showActions = !showActions">{{ (showActions ? 'Hide' : 'Show') + ' actions' }}</action-button>
 
           <div v-show="showActions">
             <action-button @btn-click="toggleTaskDone">{{ 'Mark ' + (task.isDone ? 'Undone' : 'Done') }}</action-button><br>
@@ -148,9 +148,12 @@ export default {
       this.$store.dispatch(`history/${UPDATE_HISTORY}`, {
         type: 'task',
         user: this.ActiveUser.userNickname,
+        userId: this.ActiveUser.userId,
         date: this.$store.getters.getCurrentDate,
         action: action,
-        task: this.task.taskName});
+        task: this.task.taskName,
+        taskId: this.task.taskId
+      });
     }
 
   }
@@ -211,9 +214,6 @@ export default {
   right: 20px;
   bottom: 20px;
   height: 42px;
-  /*-ms-flex-item-align: end;*/
-  /*align-self: flex-end;*/
-
 }
 
 .task-img {width: 200px; margin-right: 20px;}
@@ -257,7 +257,6 @@ export default {
   font-size: 14px;
 }
 .task-create-date {padding-top: 10px;}
-
 
 #task-wrap.task-wrap-grid .task-container {
   width: calc(33.33% - 13px);

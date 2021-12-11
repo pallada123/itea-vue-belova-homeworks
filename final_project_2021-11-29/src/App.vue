@@ -2,9 +2,9 @@
   <div id="app">
     <component :is="theme">
       <div>
-      <action-button :class="'btn-visual'" @btn-click="theme === 'LightTheme' ? theme = 'DarkTheme' : theme = 'LightTheme'">{{ theme === 'LightTheme' ? 'Dark Theme' : 'Light Theme' }}</action-button>
+      <action-button class="btn-visual" @btn-click="theme === 'LightTheme' ? theme = 'DarkTheme' : theme = 'LightTheme'">{{ theme === 'LightTheme' ? 'Dark Theme' : 'Light Theme' }}</action-button>
 
-      <action-button :class="'btn-visual'" @btn-click="showHistory = !showHistory">{{ 'History' }}</action-button>
+      <action-button class="btn-visual" @btn-click="showHistory = !showHistory">History</action-button>
 
       <transition name="fade">
         <router-view />
@@ -12,7 +12,7 @@
 
 
       <transition name="history">
-        <popup @close-popup="hideHistory" v-if="showHistory" :class="'popup-history'">
+        <popup @close-popup="hideHistory" v-if="showHistory" class="popup-history">
           <history />
         </popup>
       </transition>

@@ -5,28 +5,28 @@
 
       <div id="login-form">
         <div class="login-item">
-          <label>Name *</label><input-text :class="(validation.userNameReg || validation.userNameLength) ? 'input-error' : ''" v-bind:input.sync="credentials.userName" />
+          <label>Name *</label><input-text :class="{'input-error': (validation.userNameReg || validation.userNameLength)}" v-bind:input.sync="credentials.userName" />
           <error-msg v-show="validation.userNameReg">{{ errorMsg.req }}</error-msg>
           <error-msg v-show="validation.userNameLength">{{ errorMsg.length }}</error-msg>
         </div>
         <div class="login-item">
-          <label>Nickname *</label><input-text :class="(validation.userNicknameReg || validation.userNicknameLength || validation.userNicknameExists) ? 'input-error' : ''" v-bind:input.sync="credentials.userNickname" />
+          <label>Nickname *</label><input-text :class="{'input-error': (validation.userNicknameReg || validation.userNicknameLength || validation.userNicknameExists)}" v-bind:input.sync="credentials.userNickname" />
           <error-msg v-show="validation.userNicknameReg">{{ errorMsg.req }}</error-msg>
           <error-msg v-show="validation.userNicknameLength">{{ errorMsg.length }}</error-msg>
           <error-msg v-show="validation.userNicknameExists">{{ errorMsg.nicknameExists }}</error-msg>
         </div>
         <div class="login-item">
-          <label>Email</label><input-text :class="(validation.userEmailFormat || validation.userEmailExists) ? 'input-error' : ''" v-bind:input.sync="credentials.userEmail" />
+          <label>Email</label><input-text :class="{'input-error': (validation.userEmailFormat || validation.userEmailExists)}" v-bind:input.sync="credentials.userEmail" />
           <error-msg v-show="validation.userEmailFormat">{{ errorMsg.emailFormat }}</error-msg>
           <error-msg v-show="validation.userEmailExists">{{ errorMsg.emailExists }}</error-msg>
         </div>
         <div class="login-item">
-          <label>Password *</label><input-text :class="(validation.userPasswordReg || validation.userPasswordFormat) ? 'input-error' : ''" :type="'password'" v-bind:input.sync="credentials.userPassword" />
+          <label>Password *</label><input-password :class="{'input-error': (validation.userPasswordReg || validation.userPasswordFormat)}" v-bind:input.sync="credentials.userPassword" />
           <error-msg v-show="validation.userPasswordReg">{{ errorMsg.req }}</error-msg>
           <error-msg v-show="validation.userPasswordFormat">{{ errorMsg.passwordFormat }}</error-msg>
         </div>
         <div class="login-item">
-          <label>Repeat password *</label><input-text :class="(validation.userPasswordRepReg || validation.userPasswordRepFormat) ? 'input-error' : ''" :type="'password'" v-bind:input.sync="credentials.userPasswordRep" />
+          <label>Repeat password *</label><input-password :class="{'input-error': (validation.userPasswordRepReg || validation.userPasswordRepFormat)}" v-bind:input.sync="credentials.userPasswordRep" />
           <error-msg v-show="validation.userPasswordRepReg">{{ errorMsg.req }}</error-msg>
           <error-msg v-show="validation.userPasswordRepFormat">{{ errorMsg.passwordRepFormat }}</error-msg>
         </div>
@@ -46,10 +46,11 @@ import InputText from "../components/common/InputText";
 import ActionButton from "../components/common/ActionButton";
 import Popup from "../components/common/Popup";
 import ErrorMsg from "../components/login/ErrorMsg";
+import InputPassword from "../components/common/InputPassword";
 
 export default {
   name: "Registration",
-  components: {ErrorMsg, ActionButton, InputText, Popup},
+  components: {InputPassword, ErrorMsg, ActionButton, InputText, Popup},
 
   data () {
     return {
@@ -139,12 +140,12 @@ export default {
       this.validation.userPasswordRepReg = !this.credentials.userPasswordRep;
 
       if (this.credentials.userNickname &&
-          this.UsersList.find(item => item.userNickname === this.credentials.userNickname)) {
+          this.UsersList.find(item => item.userNickname.toLowerCase() === this.credentials.userNickname.toLowerCase())) {
         this.validation.userNicknameExists = true;
       }
 
       if (this.credentials.userEmail &&
-          this.UsersList.find(item => item.userEmail === this.credentials.userEmail)) {
+          this.UsersList.find(item => item.userEmail.toLowerCase() === this.credentials.userEmail.toLowerCase())) {
         this.validation.userEmailExists = true;
       }
 
@@ -161,7 +162,7 @@ export default {
 
       if (this.credentials.userEmail &&
           !this.validation.userEmailExists &&
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.[a-z]{2,})$/.test(this.credentials.userEmail)) {
+          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.[a-z]{2,})$/i.test(this.credentials.userEmail)) {
         this.validation.userEmailFormat = true;
       }
 
@@ -171,7 +172,7 @@ export default {
           this.validation.userPasswordFormat = true;
         }
 
-        if (!/[a-zA-Z0-9\-_\[\](){}<>#&/@$%^.,:;?!]*/.test(this.credentials.userPassword)) {
+        if (!/[a-zA-Z0-9\-_\[\](){}<>#&/@$%^.,:;?!]+/.test(this.credentials.userPassword)) {
           this.validation.userPasswordFormat = true;
         }
 
@@ -201,7 +202,7 @@ export default {
       this.UsersList.push(user);
 
       this.$store.dispatch(`todo/${UPDATE_USERS_LIST}`, {user: user, userList: this.UsersList});
-      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {type: 'user', user: this.credentials.userNickname, date: this.$store.getters.getCurrentDate, action: 'reg'});
+      this.$store.dispatch(`history/${UPDATE_HISTORY}`, {type: 'user', user: this.credentials.userNickname, userId: user.userId, date: this.$store.getters.getCurrentDate, action: 'reg'});
 
       this.$router.push('/todos');
     },
